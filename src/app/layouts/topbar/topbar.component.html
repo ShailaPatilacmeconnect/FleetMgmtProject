@@ -1,0 +1,126 @@
+<header id="page-topbar">
+  <div class="navbar-header">
+    <div class="d-flex">
+      <!-- LOGO -->
+      <div class="navbar-brand-box">
+        <a href="/" class="logo logo-dark">
+          <span class="logo-sm">
+             <!-- <img src="assets/logo.png" style="height: 60px;"/> -->
+          </span>
+          <span class="logo-lg">
+             <!-- <img src="assets/logo.png" style="height: 60px;"/> -->
+          </span>
+        </a>
+
+        <a href="/" class="logo logo-light">
+          <span class="logo-sm">
+             <!-- <img src="assets/logo.png" style="height: 60px;"/> -->
+          </span>
+          <span class="logo-lg">
+             <!-- <img src="assets/logo.png" style="height: 60px;"/> -->
+          </span>
+        </a>
+      </div>
+
+      <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn"
+        (click)="toggleMobileMenu($event)">
+        <i class="fa fa-fw fa-bars"></i>
+      </button>
+
+   
+    </div>
+
+    <div class="d-flex">
+
+    
+      <div class="dropdown d-inline-block" ngbDropdown>
+        <button type="button" class="btn header-item" ngbDropdownToggle id="page-header-user-dropdown">
+          <!-- <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar"> -->
+          <span class="d-none d-xl-inline-block ml-1">{{currentUser.name}}</span>
+          <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+          
+          <!-- <a class="dropdown-item" href="javascript: void(0);"><i class="bx bx-user font-size-16 align-middle me-1"></i>
+            {{ 'HEADER.LOGIN.PROFILE' | translate}}</a>
+          <a class="dropdown-item" href="javascript: void(0);"><i
+              class="bx bx-wallet font-size-16 align-middle me-1"></i>{{ 'HEADER.LOGIN.MY_WALLET' | translate}}</a>
+          --> 
+          <a class="dropdown-item d-block" href="javascript: void(0);"  (click)="editModal(largeDataModal)"><i
+              class="bx bx-wrench font-size-16 align-middle me-1"></i>Change Password </a>
+          <!--<a class="dropdown-item" href="javascript: void(0);"><i
+              class="bx bx-lock-open font-size-16 align-middle me-1"></i>
+            {{ 'HEADER.LOGIN.LOCK_SCREEN' | translate}}</a> -->
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="javascript: void(0);" (click)="logout()"><i
+              class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
+            {{ 'HEADER.LOGIN.LOGOUT' | translate}}</a>
+        </div>
+      </div>
+
+      <!-- <div class="dropdown d-inline-block">
+        <button type="button" class="btn header-item noti-icon right-bar-toggle" (click)="toggleRightSidebar()">
+          <i class="bx bx-cog bx-spin"></i>
+        </button>
+      </div> -->
+
+    </div>
+  </div>
+</header>
+<ng-template #largeDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Change Password</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+  </div>
+  <div class="modal-body">
+
+    
+      <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
+        
+        <div class="form-group mb-2">
+          <label>Current Password</label>
+          <input type="text" class="form-control" formControlName="current_password"
+            [ngClass]="{'is-invalid': typesubmit && type.current_password.errors}"  />
+          <div *ngIf="typesubmit && type.current_password.errors" class="invalid-feedback">
+            <span *ngIf="type.current_password.errors.required">Current Password is required.</span>
+          </div>
+        </div>
+        
+        <div class="form-group mb-2">
+          <label>New Password</label>
+          <div>
+            <input type="password" class="form-control"autocomplete="new-password" maxlength="50" formControlName="new_password"
+              [ngClass]="{'is-invalid': typesubmit && type.new_password.errors}" />
+            <div *ngIf="typesubmit && type.new_password.errors" class="invalid-feedback">
+              <span *ngIf="type.new_password.errors.required">Password is required.</span>
+              <span *ngIf="type.new_password.errors.minlength">Password must be at least 10
+                characters.</span>
+                <span *ngIf="type.new_password.errors.pattern"> Password must contain alphabetics,numbers and special charactes !</span>
+
+            </div>
+          </div>
+          <div class="mt-2">
+            <input type="password" class="form-control" placeholder="Re-Type Password" formControlName="confirm_password"
+              [ngClass]="{'is-invalid': typesubmit && type.confirm_password.errors}" />
+            <div *ngIf="typesubmit && type.confirm_password.errors" class="invalid-feedback">
+              <span *ngIf="type.confirm_password.errors.required">This value is required.</span>
+              <span *ngIf="type.confirm_password.errors.mustMatch">This value should be the same.</span>
+            </div>
+          </div>
+        </div>
+      
+        <div class="form-group mb-2 mt-3">
+          <div>
+            <button type="reset" class="btn btn-secondary float-end">
+              Reset
+            </button>
+            <button type="submit" class="btn btn-primary  float-end me-1">
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    
+  </div>
+</ng-template>
+

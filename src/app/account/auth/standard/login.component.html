@@ -1,0 +1,396 @@
+<div class="account-pages mb-5 pt-sm-5">
+  <div class="container-fluid">
+  <div class="row justify-content-center"> 
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+       
+          <form (ngSubmit)="typeSubmit()" #f=ngForm [formGroup]="typeValidationForm" class="row">
+            <div class="card-title col-md-12">Text Inputs</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Name</label>
+              <input type="text" class="form-control" formControlName="name"/>
+              <!-- <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
+                <span *ngIf="type.name.errors.required"> Name is required.</span>
+              </div> -->
+            </div>
+           
+            <div class="form-group mb-3 col-md-6">
+              <label>E-Mail</label>
+              <div>
+                <input type="email" class="form-control" formControlName="email" autocomplete="off"  />
+                <!-- <div *ngIf="typesubmit && type.email.errors" class="invalid-feedback">
+                  <span *ngIf="type.email.errors.required">Email is required.</span>
+                  <span *ngIf="type.email.errors.pattern">Email should be a valid email.</span>
+                </div> -->
+              </div>
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Phone Number with country code plugin</label>
+              <!-- <input type="tel" class="form-control" ng2TelInput> -->
+
+              <ngx-intl-tel-input
+              [cssClass]="'form-control'"
+              [preferredCountries]="preferredCountries"
+              [enableAutoCountrySelect]="false"
+              [enablePlaceholder]="true"
+              [searchCountryFlag]="true"
+              [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+              [selectFirstCountry]="false"
+              [selectedCountryISO]="selectedCountryISO"
+              [maxLength]="15"
+              [phoneValidation]="true"
+              inputId="my-input-id"
+              name="phone"
+              [separateDialCode]="separateDialCode"
+              formControlName="phone"
+            ></ngx-intl-tel-input>
+              <!-- <div *ngIf="typesubmit && f.form.controls['phone'].invalid" class="invalid-feedback" style="display:block">
+                <span *ngIf="f.form.controls['phone'].invalid">Require a valid phone number.</span>
+              </div> -->
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Phone number with fixed country code</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="validationTooltipUsernamePrepend">+971</span>
+                </div>
+                <input type="text" class="form-control" formControlName="mobile"  />
+                <!-- <div *ngIf="typesubmit && type.mobile.errors" class="invalid-feedback">
+                  <span *ngIf="type.mobile.errors.required">phone number is required.</span>
+                  <span *ngIf="type.mobile.errors.pattern">phone number should be a valid one.</span>
+                </div> -->
+              </div>
+            </div>
+           
+            <div class="form-group mb-3 col-md-6">
+              <label>Password</label>
+              <div>
+                <input type="password" class="form-control"autocomplete="new-password" maxlength="50" formControlName="password"/>
+                  <div class="">
+                    <span>Password must be at least 10 characters and must contain alphabetics,numbers and special charactes !</span>
+                  </div>
+<!-- 
+                <div *ngIf="typesubmit && type.password.errors" class="invalid-feedback">
+                  <span *ngIf="type.password.errors.required">Password is required.</span>
+                  <span *ngIf="type.password.errors.minlength">Password must be at least 10
+                    characters.</span>
+                    <span *ngIf="type.password.errors.pattern"> Password must contain alphabetics,numbers and special charactes !</span>
+
+                </div> -->
+              </div>
+              
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Confirm Password</label>
+              <input type="password" class="form-control" placeholder="Re-Type Password" formControlName="confirmpwd"/>
+                <!-- <div *ngIf="typesubmit && type.confirmpwd.errors" class="invalid-feedback">
+                  <span *ngIf="type.confirmpwd.errors.required">This value is required.</span>
+                  <span *ngIf="type.confirmpwd.errors.mustMatch">This value should be the same.</span>
+                </div> -->
+            </div>
+
+            <div class="card-title col-md-12">Text Area</div>
+            <div class="form-group mb-3 col-md-12">
+              <label>Description</label>
+              <textarea class="form-control" rows="4" formControlName="description"></textarea>
+            </div>
+            <div class="form-group mb-3 col-md-12">
+              <label>HTML Editor</label>
+              <ckeditor [editor]="Editor" data="<p>Content of the editor.</p>" formControlName="editor" name="productname"  ></ckeditor>
+            </div>
+            <div class="card-title col-md-12">Number Input</div>
+            <div class="form-group mb-3 col-md-12">
+              <label>Number Field</label>
+              <input type="number" class="form-control" formControlName="number"/>
+            </div>
+            <div class="card-title col-md-12">Date Inputs</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Single Date</label>
+              <input class="form-control" type="date" value="2019-08-19" id="example-date-input">
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label class="w-100">Date Range</label>
+              <input type="text"
+              placeholder="Daterangepicker"
+              class="form-control"
+              bsDaterangepicker
+              [bsConfig]="{ adaptivePosition: true }">
+              <!-- <mat-form-field appearance="fill" class="">
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate  placeholder="Start date">
+                  <input matEndDate  placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              
+              </mat-form-field>      -->
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Month</label>
+                <input class="form-control" type="month" value="2019-08" id="example-month-input">
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label >Time</label>
+                <input class="form-control" type="time" value="13:45:00" id="example-time-input">
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label >Date Time</label>
+              <input class="form-control" type="datetime-local" value="2019-08-19T13:45:00"
+              id="example-datetime-local-input"> 
+            </div>   
+            <div class="card-title col-md-12">Dropdowns</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Single Select</label>
+              <ng-select [items]="['one','two','three']"></ng-select>
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Multiple Select</label>
+              <ng-select multiple=true [items]="['one','two','three']"></ng-select>
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Select with search</label>
+              <ng-select  [items]="['one','two','three']"></ng-select>
+            </div>
+            
+            <div class="card-title col-md-12">Type Search</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Choose from the list</label>
+              <input type="text" class="form-control" list="codes"(change)="saveCode($event)">
+              <datalist id="codes">
+                <option *ngFor="let c of ['one','two','three']" [value]="c" >{{c}}</option>
+              </datalist>            
+            </div>
+            <div class="card-title col-md-12">Color Picker</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Simple Color field</label>
+              <input type="text" class="colorpicker-default form-control" [value]="color" [(colorPicker)]="color"
+                [cpOutputFormat]="'hex'" [cpPosition]="'bottom'">
+            </div>
+            <div class="card-title col-md-12">Range Picker</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Single Slider</label>
+              <ngx-slider [(value)]="value" [options]="options"></ngx-slider>
+
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Range Slider</label>
+              <ngx-slider [(value)]="lowValue" [(highValue)]="highValue" [options]="options"></ngx-slider>
+            </div>
+            <div class="card-title col-md-12">Check Boxes</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Check boxes</label>
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+                <label class="custom-control-label" for="customCheck1">Custom checkbox</label>
+              </div>
+             
+            </div>
+            <div class="card-title col-md-12">Radio Buttons</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Radio Buttons</label>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                  checked>
+                <label class="form-check-label" for="exampleRadios1">
+                  Default radio
+                </label>
+              </div>
+            </div>
+            <div class="card-title col-md-12">Switches/ Toggle Buttons</div>
+            <div class="form-group mb-3 col-md-6">
+              <div class="custom-control custom-switch mb-2" dir="ltr">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+              </div>
+            </div>
+            <div class="card-title col-md-12">File Inputs</div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Single File Upload</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile"  (change)="onFileSelected($event,1)">
+                <label class="custom-file-label" for="customFile">{{label1}}</label>
+              </div>
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>Multi File Upload</label>
+              <div class="custom-file">
+                <input type="file" multiple=true class="custom-file-input" id="customFile"  (change)="onFileSelected($event,2)">
+                <label class="custom-file-label" for="customFile">{{label2}}</label>
+              </div>
+            </div>
+            <div class="form-group mb-3 col-md-6">
+              <label>File Upload with Croping</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile"  (change)="onFileSelected($event,3)">
+                <label class="custom-file-label" for="customFile">{{label3}}</label>
+              </div>
+            </div>
+            <div class="form-group mb-3 col-md-6" *ngIf="imageChangedEvent ">
+              <label>Preview</label>
+              <div class="row" >
+                <image-cropper class="col-md-6"
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="4 / 3"
+                    [resizeToWidth]="70" [resizeToHeight]="60"
+                    format="png" backgroundColor="#fff0"
+                    backgroundColor="#fff"  (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded()"
+                    (cropperReady)="cropperReady()"
+                    (loadImageFailed)="loadImageFailed()"
+                ></image-cropper>
+              <div class="text-center col-md-6 " *ngIf="m_logo_path">
+                <img class="w-100" [src]="m_logo_path">
+              </div>
+              </div>
+            </div>
+            <div class="form-group mb-3 col-md-12">
+              <label>File Upload with dropzone</label>
+              <div>
+                <ngx-dropzone [multiple]=true  [maxFileSize]="2000000"  accept="image/jpeg,image/jpg,image/png"(change)="onSelect($event)">
+                  <ngx-dropzone-label>Drop Image</ngx-dropzone-label>
+                  <ngx-dropzone-image-preview  *ngFor="let f of filescompressed; let i = index" ngProjectAs="ngx-dropzone-preview"[removable]="true" (removed)="onRemove(f)" [file]="f" >
+                    <ngx-dropzone-label></ngx-dropzone-label>
+                  </ngx-dropzone-image-preview>
+                </ngx-dropzone>
+              </div>
+
+            </div>
+            
+          <div class="card-title col-md-12">Form Wizard </div>
+
+          <aw-wizard [navBarLayout]="'large-empty-symbols'"  class="form-group mb-3 col-md-12">
+            <aw-wizard-step stepTitle="Seller Details">
+              <ng-template awWizardStepSymbol>1</ng-template>
+              <div class="row mt-3">
+                <div class="col-12">
+                  <div class="form-group mb-3 row mb-3">
+                    <label class="col-md-3 col-form-label">Contact Person</label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="txtFirstNameBilling" type="text" id="txtFirstNameBilling">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3 row mb-3">
+                    <label class="col-md-3 col-form-label">Mobile No.</label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="txtLastNameBilling" type="text" id="txtLastNameBilling">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3 row mb-3">
+                    <label class="col-md-3 col-form-label">Landline No.</label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="txtCompanyBilling" type="text" id="txtCompanyBilling">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="list-inline wizard mb-0">
+                <li class="next list-inline-item float-end"><button class="btn btn-primary" awNextStep>Next</button>
+                </li>
+              </ul>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="Bank Details">
+              <ng-template awWizardStepSymbol>2</ng-template>
+
+              <div class="row mt-3">
+                <div class="col-12">
+                  <div class="form-group mb-3 row mb-3">
+                    <label class="col-md-3 col-form-label">Name on Card</label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="txtNameCard" type="text">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3 row">
+                    <label class="col-md-3 col-form-label" for="ddlCreditCardType">Credit Card Type</label>
+                    <div class="col-md-9">
+                      <select id="ddlCreditCardType" name="ddlCreditCardType" class="form-control">
+                        <option value="">--Please Select--</option>
+                        <option value="AE">American Express</option>
+                        <option value="VI">Visa</option>
+                        <option value="MC">MasterCard</option>
+                        <option value="DI">Discover</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group mb-3 row mb-3">
+                    <label class="col-md-3 col-form-label">Credit Card Number</label>
+                    <div class="col-md-9">
+                      <input id="txtCreditCardNumber" class="form-control" name="txtCreditCardNumber" type="text">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3 row mb-3">
+                    <label class="col-md-3 col-form-label">Expiration Date</label>
+                    <div class="col-md-9">
+                      <input id="txtExpirationDate" class="form-control" name="txtExpirationDate" type="text">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <ul class="list-inline wizard mb-0">
+                <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
+                </li>
+                <li class="next list-inline-item float-end"><button class="btn btn-primary" awNextStep>Next</button>
+                </li>
+              </ul>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="Confirm Detail">
+              <ng-template awWizardStepSymbol>3</ng-template>
+              <div class="p-3 text-center">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1">
+                  <label class="custom-control-label" for="customCheck1">I agree with the Terms and Conditions.</label>
+                </div>
+              </div>
+              <ul class="list-inline wizard mb-0">
+                <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
+                </li>
+              </ul>
+            </aw-wizard-step>
+          </aw-wizard>
+          <div class="card-title col-md-12">Form Repeater  <input type="button" class="btn btn-sm ml-3 btn-primary mt-3 mt-lg-0" value="+" (click)="addField2()"></div>
+
+            <div class="form-group mb-3 col-md-12">
+              <div formArrayName="stocklist">
+                <div *ngFor="let data1 of formData2().controls; let i=index;">
+                  <div [formGroupName]="i" class="row">
+                    <div class="form-group mb-3 col-md-5">
+                      <label for="name">Name</label>
+                      <input type="text" class="form-control" formControlName="name"/>
+
+                    </div>
+                    <div class="form-group mb-3 col-md-3">
+                      <label for="message">Quantity</label>
+                     <input type="number" class="form-control" formControlName="quantity"/>
+                    </div>
+                    
+                    <div class="col-md-1 align-self-center">
+                      <i class="fas fa-trash-alt text-danger mr-1"(click)="removeField2(i)" ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+            <div class="form-group mb-3 col-md-12 mb-0">
+              <div>
+                <button type="reset" class="btn btn-secondary float-end">
+                  Reset
+                </button>
+                <button type="submit" class="btn btn-primary mr-1  float-end">
+                  Submit
+                </button>
+               
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</div>
