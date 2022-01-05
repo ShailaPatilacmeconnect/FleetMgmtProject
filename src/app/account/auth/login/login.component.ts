@@ -1,52 +1,56 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
+import { AuthfakeauthenticationService } from "../../../core/services/authfake.service";
 
-import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from "@angular/router";
+import { first } from "rxjs/operators";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
 })
 
 /**
  * Login component
  */
 export class LoginComponent implements OnInit, AfterViewInit {
-
   loginForm: FormGroup;
   submitted = false;
-  error = '';
+  error = "";
   returnUrl: string;
 
   // set the currenr year
   year: number = new Date().getFullYear();
 
   // tslint:disable-next-line: max-line-length
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
-    private authFackservice: AuthfakeauthenticationService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authFackservice: AuthfakeauthenticationService
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required]],
     });
 
     // reset login status
     // this.authenticationService.logout();
     // get return url from route parameters or default to '/'
     // tslint:disable-next-line: no-string-literal
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
   }
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
   /**
    * Form submit
@@ -58,27 +62,25 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      // let formdata=new FormData();
-      // formdata.append('email',this.f.email.value);
-      // formdata.append('password',this.f.password.value)
+      let formdata = new FormData();
+      formdata.append("email", this.f.email.value);
+      formdata.append("password", this.f.password.value);
 
-        this.authFackservice.login(this.loginForm.value)
-          .pipe(first()).subscribe(
-            data => {
-              if(data.status==true){
-                if(this.authFackservice.currentUserValue['role']==1){
-                  this.router.navigate(['/dashboard']);
-                }else{
-                  this.error ="Sorry! You have no access"
-                }
-               
+      this.authFackservice
+        .login(formdata)
+        .pipe(first())
+        .subscribe(
+          (data) => {
+            if (data.status == true) {
+              if (this.authFackservice.currentUserValue["role"] == 1) {
+                this.router.navigate(["/dashboard"]);
+              } else {
+                this.error = "Sorry! You have no access";
               }
-              else
-              this.error = data.message;
-            },
-            error => {
-              
-            });
+            } else this.error = data.message;
+          },
+          (error) => {}
+        );
     }
   }
 }

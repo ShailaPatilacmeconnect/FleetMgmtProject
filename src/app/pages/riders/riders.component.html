@@ -1,0 +1,175 @@
+<div class="container-fluid">
+
+    <app-page-title title="riders" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Search</label>
+                                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword"
+                                    (keyup)="search()" />
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group mb-2 col-md-12">
+                                <label style="visibility: hidden;">report</label>
+                                <div>
+                                    <div class="text-sm-end">
+                                        <button type="button" class="btn btn-primary mb-2 me-2"
+                                            (click)="largeModal(largeDataModal)">
+                                            <i class="mdi mdi-plus me-1"></i> New Rider
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="riderData.length>0">
+                        <table class="table dt-responsive nowrap datatables no-footer dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th sortable="name" (sort)="onSort($event)">Name</th>
+                                    <th sortable="status" (sort)="onSort($event)" class="text-center">Action</th>
+                                    <th class="text-center">Edit</th>
+                                    <th class="text-center">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ridersInfo of riderData ">
+                                    <td>{{ridersInfo.name}}|{{ridersInfo.phone}}</td>
+                                    <td>
+                                        <div class="form-check form-switch  mb-2" dir="ltr">
+                                            <input type="checkbox" class="form-check-input"
+                                                (change)="toggleFunction($event,ridersInfo.user_id)"
+                                                [checked]="!ridersInfo.user_status" [id]="ridersInfo.user_id">
+                                            <label class="custom-control-label" [for]="ridersInfo.user_id"></label>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div placement="bottom-end">
+                                            <a href="javascript: void(0);"
+                                                (click)="editModal(largeDataModal,ridersInfo)"><i
+                                                    class="fas fa-pencil-alt text-success me-2"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div placement="bottom-end">
+                                            <a href="javascript: void(0);" (click)="deleteRow(ridersInfo)"><i
+                                                    class="fas fa-times text-success me-2"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <app-pagination [page]="pageCopy()" *ngIf="riderData.length>0"
+                        (newItemEvent)="changePage($event)"></app-pagination>
+                    <div class="table-responsive text-primary" *ngIf="riderData.length==0">
+                        * 0 Results Found.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<ng-template #largeDataModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">{{title}} Rider</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
+                            <div class="form-group mb-2">
+                                <label>Name</label>
+                                <input type="text" class="form-control" formControlName="name"
+                                    [ngClass]="{'is-invalid': typesubmit && type.name.errors}" />
+                                <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
+                                    <span *ngIf="type.name.errors.required"> Name is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Email</label>
+                                <input type="text" class="form-control" formControlName="email"
+                                    [ngClass]="{'is-invalid': typesubmit && type.email.errors}" />
+                                <div *ngIf="typesubmit && type.email.errors" class="invalid-feedback">
+                                    <span *ngIf="type.email.errors.required"> Email is required.</span>
+                                    <span *ngIf="type.email.errors.pattern">Email should be a valid email.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Phone</label>
+                                <input type="text" class="form-control" formControlName="phone"
+                                    [ngClass]="{'is-invalid': typesubmit && type.phone.errors}" />
+                                <div *ngIf="typesubmit && type.phone.errors" class="invalid-feedback">
+                                    <span *ngIf="type.phone.errors.required">phone number is required.</span>
+                                    <span *ngIf="type.phone.errors.pattern">phone number should be a valid one.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Vehical</label>
+                                    <select class="form-select" name="vehicle" formControlName="vehicle" [ngClass]="{'is-invalid': typesubmit && type.vehicle.errors}">
+                                        <option value="car">Car</option>
+                                        <option value="bike">Bike</option>
+                                    </select>
+                                    <div *ngIf="typesubmit && type.vehicle.errors" class="invalid-feedback">
+                                        <span *ngIf="type.vehicle.errors.required"> Select Vehical</span>
+                                    </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Company1</label>
+                                <input type="text" class="form-control" formControlName="company_id1"
+                                    [ngClass]="{'is-invalid': typesubmit && type.company_id1.errors}" />
+                                <div *ngIf="typesubmit && type.company_id1.errors" class="invalid-feedback">
+                                    <span *ngIf="type.company_id1.errors.required"> Company1 is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Company2</label>
+                                <input type="text" class="form-control" formControlName="company_id2"
+                                    [ngClass]="{'is-invalid': typesubmit && type.company_id2.errors}" />
+                                <div *ngIf="typesubmit && type.company_id2.errors" class="invalid-feedback">
+                                    <span *ngIf="type.company_id2.errors.required"> Company2 is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Company3</label>
+                                <input type="text" class="form-control" formControlName="company_id3"
+                                    [ngClass]="{'is-invalid': typesubmit && type.company_id3.errors}" />
+                                <div *ngIf="typesubmit && type.company_id3.errors" class="invalid-feedback">
+                                    <span *ngIf="type.company_id3.errors.required"> Company3 is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2 col-md-12 mb-0 mt-3">
+                                <div>
+                                    <button type="reset" class="btn btn-secondary float-end">
+                                        Reset
+                                    </button>
+                                    <button type="submit" class="btn btn-primary  float-end me-1">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</ng-template>

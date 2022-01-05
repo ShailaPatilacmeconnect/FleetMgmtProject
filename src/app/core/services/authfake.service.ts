@@ -62,13 +62,13 @@ export class AuthfakeauthenticationService {
     }
     login(form) {
         this.apiStatusHandler.next({show:true});
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type' : 'application/json',
-              'Access-Control-Allow-Origin':'*',
-            })
-          };
-        return this.http.post<any>(environment.baseurl+'auth/login', JSON.stringify(form),httpOptions)
+        // const httpOptions = {
+        //     headers: new HttpHeaders({
+        //       'Content-Type' : 'application/json',
+        //       'Access-Control-Allow-Origin':'*',
+        //     })
+        //   };
+        return this.http.post<any>(environment.baseurl+'auth/login', form)
                    .pipe(map(res => {
             this.apiStatusHandler.next({show:false});
                 // login successful if there's a jwt token in the response

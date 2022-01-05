@@ -1,0 +1,154 @@
+<div class="container-fluid">
+
+    <app-page-title title="Product Category" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Search</label>
+                                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword"
+                                    (keyup)="search()" />
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group mb-2 col-md-12">
+                                <label style="visibility: hidden;">report</label>
+                                <div>
+                                    <div class="text-sm-end">
+                                        <button type="button" class="btn btn-primary mb-2 me-2"
+                                            (click)="largeModal(largeDataModal)">
+                                            <i class="mdi mdi-plus me-1"></i> New Category
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="productCategoryData.length>0">
+                        <table class="table dt-responsive nowrap datatables no-footer dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th sortable="name" (sort)="onSort($event)">Product Category</th>
+                                    <th sortable="parent_category_name" (sort)="onSort($event)" class="text-center">
+                                        Parent_Category_Name</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let categoryData of productCategoryData ">
+                                    <td>{{categoryData.category_name}}</td>
+                                    <td>{{categoryData.parent_category_name}}</td>
+                                    <td>
+                                        <div class="form-check form-switch  mb-2" dir="ltr">
+                                            <input type="checkbox" class="form-check-input"
+                                                (click)="toggleFunction($event,categoryData.id)"
+                                                [checked]="!categoryData.status" [id]="categoryData.id">
+                                            <label class="custom-control-label" [for]="categoryData.id"></label>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div placement="bottom-end">
+                                            <a href="javascript: void(0);"
+                                                (click)="editModal(largeDataModal,categoryData)"><i
+                                                    class="fas fa-pencil-alt text-success me-2"></i>
+                                            </a>
+                                            <a href="javascript: void(0);" (click)="deleteRow(categoryData)">
+                                                <i class="fas fa-times text-success me-2"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <app-pagination [page]="pageCopy()" *ngIf="productCategoryData.length>0"
+                        (newItemEvent)="changePage($event)"></app-pagination>
+                    <div class="table-responsive text-primary" *ngIf="productCategoryData.length==0">
+                        * 0 Results Found.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<ng-template #largeDataModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">{{title}} Category</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
+                            <div class="form-group mb-2">
+                                <label>Category Name</label>
+                                <input type="text" class="form-control" formControlName="category_name"
+                                    [ngClass]="{'is-invalid': typesubmit && type.category_name.errors}" />
+                                <div *ngIf="typesubmit && type.category_name.errors" class="invalid-feedback">
+                                    <span *ngIf="type.category_name.errors.required"> Name is required.</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col form-group mb-2">
+                                    <label>Parent</label>
+
+                                    <div class="form-check mb-2" dir="ltr">
+                                        <!-- Default checked radio -->
+                                        <input class="form-check-input" type="radio" name="hasParent"
+                                            id="flexRadioDefault1" formControlName="hasParent" value="0"
+                                            (click)="toggle($event) " checked />
+                                        <label class="form-check-label" for="flexRadioDefault1"> 0 </label>
+                                    </div>
+
+                                    <!-- Default  radio -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="hasParent"
+                                            id="flexRadioDefault2" formControlName="hasParent" value="1"
+                                            (click)="toggle($event)" />
+                                        <label class="form-check-label" for="flexRadioDefault2"> 1 </label>
+                                    </div>
+                                </div>
+                                <div class="col form-group mb-2" *ngIf="show">
+                                    <label>Parent Id</label>
+                                    <select class="form-control mb-2" formControlName="parent_id"
+                                        [ngClass]="{'is-invalid': typesubmit && type.parent_id.errors}">
+                                        <!-- <option selected>Select Parent</option> -->
+                                        <option *ngFor="let pId of productCategoryData" value="{{pId.parent_id}}">
+                                            {{pId.parent_id}}</option>
+                                    </select>
+                                    <div *ngIf="typesubmit && type.parent_id.errors" class="invalid-feedback">
+                                        <span *ngIf="type.parent_id.errors.required"> Name is required.</span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="form-group mb-2 col-md-12 mb-0 mt-3">
+                                <div>
+                                    <button type="reset" class="btn btn-secondary float-end">
+                                        Reset
+                                    </button>
+                                    <button type="submit" class="btn btn-primary  float-end me-1">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</ng-template>
