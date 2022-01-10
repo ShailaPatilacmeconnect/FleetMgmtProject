@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  baseurl:"https://bankfab.marshal-me.com/modularApp/",
+  baseurl:"https://bankfab.marshal-me.com/fleetApp/",
 
   production: false,
   defaultauth: 'fackbackend',

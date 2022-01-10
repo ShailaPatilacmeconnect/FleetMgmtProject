@@ -58,11 +58,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      // let formdata=new FormData();
-      // formdata.append('email',this.f.email.value);
-      // formdata.append('password',this.f.password.value)
+      let formdata=new FormData();
+      formdata.append('email',this.f.email.value);
+      formdata.append('password',this.f.password.value)
 
-        this.authFackservice.login(this.loginForm.value)
+        this.authFackservice.login(formdata)
           .pipe(first()).subscribe(
             data => {
               if(data.status==true){

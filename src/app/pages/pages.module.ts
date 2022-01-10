@@ -20,17 +20,16 @@ import { DashboardsModule } from './dashboards/dashboards.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbdSortableHeader } from './table-sortable';
 import { NgSelectModule } from '@ng-select/ng-select';
-
-import { UserComponent } from './user/user.component';
-import { userGroupComponent } from './settings/userGroup/userGroup.component';
-import { SettingsComponent } from './settings/settings/settings.component';
-import { checkerComponent } from './checker/checker.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { merchantComponent } from './merchant/merchant.component';
-import { databaseComponent } from './database/database.component';
-import { dbUserComponent } from './dbUser/dbUser.component';
-import { permissionsComponent } from './database/permissions/permissions.component';
-import { apiComponent } from './api/api.component';
+import { MakersComponent } from './makers/makers.component';
+import { MobileSIMComponent } from './mobile-sim/mobile-sim.component';
+import { RiderBikeHistoryComponent } from './rider-bike-history/rider-bike-history.component';
+import { RiderCarHistoryComponent } from './rider-car-history/rider-car-history.component';
+import { RiderSimHistoryComponent } from './rider-sim-history/rider-sim-history.component';
+import { LoansComponent } from './loans/loans.component';
+import { RecurringPaymentsComponent } from './recurring-payments/recurring-payments.component';
+// import { permissionsComponent } from './database/permissions/permissions.component';
+// import { apiComponent } from './api/api.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -38,11 +37,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 ]);
 
 @NgModule({
-  declarations: [UserComponent,userGroupComponent,
-    SettingsComponent,checkerComponent,
-    merchantComponent,dbUserComponent,databaseComponent,
-    permissionsComponent,apiComponent,
-    NgbdSortableHeader],
+  declarations: [
+    NgbdSortableHeader,MakersComponent,MobileSIMComponent,RiderBikeHistoryComponent, RiderCarHistoryComponent, RiderSimHistoryComponent, LoansComponent, RecurringPaymentsComponent],
   imports: [
     CommonModule,
     FormsModule,

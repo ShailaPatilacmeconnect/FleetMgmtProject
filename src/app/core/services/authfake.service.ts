@@ -68,7 +68,7 @@ export class AuthfakeauthenticationService {
               'Access-Control-Allow-Origin':'*',
             })
           };
-        return this.http.post<any>(environment.baseurl+'auth/login', JSON.stringify(form),httpOptions)
+        return this.http.post<any>(environment.baseurl+'auth/login', form)
                    .pipe(map(res => {
             this.apiStatusHandler.next({show:false});
                 // login successful if there's a jwt token in the response
