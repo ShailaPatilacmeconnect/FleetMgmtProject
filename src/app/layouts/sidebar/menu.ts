@@ -24,5 +24,23 @@ export const MENU: MenuItem[] = [
     icon: "bx bx-user",
     link: "/transactionCategory",
   },
+  {
+    id: 4,
+    label: "Bikes",
+    icon: "bx bx-user",
+    link: "/bikes",
+  },
+  {
+    id: 5,
+    label: "Cars",
+    icon: "bx bx-user",
+    link: "/cars",
+  },
+  {
+    id: 5,
+    label: "User Transactions",
+    icon: "bx bx-user",
+    link: "/userTransactions",
+  },
 ];
 

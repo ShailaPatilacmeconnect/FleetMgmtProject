@@ -1,0 +1,8 @@
+.no-outline {
+    border: hidden;
+    background-color: white;
+}
+
+.no-outline:focus {
+  outline: none;
+}

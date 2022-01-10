@@ -1,0 +1,118 @@
+<!-- <ng-template #largeDataModal1 let-modal> -->
+    <div class="modal-header">
+        <h5 class="modal-title mt-0"> User Transaction</h5>
+        <button type="button" class="close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="typeValidationForm">
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Transaction Id</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline"  name="transaction_id" formControlName="transaction_id "  />
+                                </div>
+                            </div>
+                            <!-- <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>User</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select class="form-control mb-2 no-outline" name="username" formControlName="username" >
+                                        <option *ngFor="let riders of riderData" value="{{riders.user_id}}">
+                                            {{riders.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Category Name</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select class="form-control mb-2 no-outline" name="transaction_category_id" formControlName="transaction_category_id" >
+                                    <option *ngFor="let transData of transactioncategoryData" value="{{transData.id}}">
+                                        {{transData.category_name}}</option>
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Amount</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline" formControlName="amount " 
+                                    readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Balance</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline" formControlName="updated_wallet_balance "  readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Transaction Type</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline" formControlName="transaction_type" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Transaction Date</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline" formControlName="created_at "  readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Message</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline" formControlName="message "  readonly />
+                                </div>
+                            </div>
+
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Event Date</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline" formControlName="event_date "readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Event Time</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline" formControlName="event_time "  readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row d-flex">
+                                <div class="col-sm-6">
+                                    <label>Import Version</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control no-outline" formControlName="import_version" readonly />
+                                </div>
+                            </div> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+<!-- </ng-template> -->

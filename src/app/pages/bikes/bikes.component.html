@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <app-page-title title="Transaction Category" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <app-page-title title="Bikes" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
     <div class="row">
         <div class="col-12">
@@ -21,7 +21,7 @@
                                     <div class="text-sm-end">
                                         <button type="button" class="btn btn-primary mb-2 me-2"
                                             (click)="largeModal(largeDataModal)">
-                                            <i class="mdi mdi-plus me-1"></i> New Category
+                                            <i class="mdi mdi-plus me-1"></i> New Bike
                                         </button>
                                     </div>
                                 </div>
@@ -29,33 +29,33 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive" *ngIf="transactionCategoryData.length>0">
+                    <div class="table-responsive" *ngIf="bikesData.length>0">
                         <table class="table dt-responsive nowrap datatables no-footer dtr-inline">
                             <thead>
                                 <tr>
-                                    <th sortable="name" (sort)="onSort($event)">Transaction Category</th>
+                                    <th sortable="name" (sort)="onSort($event)">Bike Id</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let transactionData of transactionCategoryData ">
-                                    <td>{{transactionData.category_name}}</td>
+                                <tr *ngFor="let bikeInfo of bikesData ">
+                                    <td>{{bikeInfo.bike_id}}</td>
                                     <td>
                                         <div class="form-check form-switch  mb-2" dir="ltr">
                                             <input type="checkbox" class="form-check-input"
-                                                (click)="toggleFunction($event,transactionData.id)"
-                                                [checked]="!transactionData.status" [id]="transactionData.id">
-                                            <label class="custom-control-label" [for]="transactionData.id"></label>
+                                                (click)="toggleFunction($event,bikeInfo.id)"
+                                                [checked]="!bikeInfo.status" [id]="bikeInfo.id">
+                                            <label class="custom-control-label" [for]="bikeInfo.id"></label>
                                         </div>
                                     </td>
                                     <td class="text-center">
                                         <div placement="bottom-end">
                                             <a href="javascript: void(0);"
-                                                (click)="editModal(largeDataModal,transactionData)"><i
+                                                (click)="editModal(largeDataModal,bikeInfo)"><i
                                                     class="fas fa-pencil-alt text-success me-2"></i>
                                             </a>
-                                            <a href="javascript: void(0);" (click)="deleteRow(transactionData)">
+                                            <a href="javascript: void(0);" (click)="deleteRow(bikeInfo)">
                                                 <i class="fas fa-times text-success me-2"></i>
                                             </a>
                                         </div>
@@ -65,9 +65,9 @@
                         </table>
                     </div>
 
-                    <app-pagination [page]="pageCopy()" *ngIf="transactionCategoryData.length>0"
+                    <app-pagination [page]="pageCopy()" *ngIf="bikesData.length>0"
                         (newItemEvent)="changePage($event)"></app-pagination>
-                    <div class="table-responsive text-primary" *ngIf="transactionCategoryData.length==0">
+                    <div class="table-responsive text-primary" *ngIf="bikesData.length==0">
                         * 0 Results Found.
                     </div>
                 </div>
@@ -78,7 +78,7 @@
 </div>
 <ng-template #largeDataModal let-modal>
     <div class="modal-header">
-        <h5 class="modal-title mt-0">{{title}} Category</h5>
+        <h5 class="modal-title mt-0">{{title}} Bike</h5>
         <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
     </div>
     <div class="modal-body">
@@ -88,11 +88,45 @@
                     <div class="card-body">
                         <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
                             <div class="form-group mb-2">
-                                <label>Category Name</label>
-                                <input type="text" class="form-control" formControlName="category_name"
-                                    [ngClass]="{'is-invalid': typesubmit && type.category_name.errors}" />
-                                <div *ngIf="typesubmit && type.category_name.errors" class="invalid-feedback">
-                                    <span *ngIf="type.category_name.errors.required"> Category is required.</span>
+                                <label>Bike Id</label>
+                                <input type="text" class="form-control" formControlName="bike_id"
+                                    [ngClass]="{'is-invalid': typesubmit && type.bike_id.errors}" />
+                                <div *ngIf="typesubmit && type.bike_id.errors" class="invalid-feedback">
+                                    <span *ngIf="type.bike_id.errors.required"> Bike Id is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Vim</label>
+                                <input type="text" class="form-control" formControlName="vim"
+                                    [ngClass]="{'is-invalid': typesubmit && type.vim.errors}" />
+                                <div *ngIf="typesubmit && type.vim.errors" class="invalid-feedback">
+                                    <span *ngIf="type.vim.errors.required"> Vim is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Plate</label>
+                                <input type="text" class="form-control" formControlName="plate"
+                                    [ngClass]="{'is-invalid': typesubmit && type.plate.errors}" />
+                                <div *ngIf="typesubmit && type.plate.errors" class="invalid-feedback">
+                                    <span *ngIf="type.plate.errors.required"> Plate is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Purchase Date</label>
+                                <input type="date" class="form-control" formControlName="purchase_date"
+                                    [ngClass]="{'is-invalid': typesubmit && type.purchase_date.errors}" />
+                                <div *ngIf="typesubmit && type.purchase_date.errors" class="invalid-feedback">
+                                    <span *ngIf="type.purchase_date.errors.required"> Purchase Date is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Maker</label>
+                                <select class="form-select" name="maker_id" formControlName="maker_id"
+                                    [ngClass]="{'is-invalid': typesubmit && type.maker_id.errors}">
+                                    <option *ngFor="let makersdata of makerData" value="{{makersdata.id}}">{{makersdata.name}}</option>
+                                </select>
+                                <div *ngIf="typesubmit && type.maker_id.errors" class="invalid-feedback">
+                                    <span *ngIf="type.maker_id.errors.required"> Select Maker</span>
                                 </div>
                             </div>
                             <div class="form-group mb-2 col-md-12 mb-0 mt-3">

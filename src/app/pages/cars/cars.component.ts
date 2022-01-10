@@ -6,30 +6,26 @@ import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.se
 import { notificationService } from "src/app/core/services/notofication.service";
 import Swal from 'sweetalert2';
 import { NgbdSortableHeader, SortEvent } from '../table-sortable';
-
 @Component({
-  selector: "app-transaction-categories",
-  templateUrl: "./transaction-categories.component.html",
-  styleUrls: ["./transaction-categories.component.scss"],
+  selector: "app-cars",
+  templateUrl: "./cars.component.html",
+  styleUrls: ["./cars.component.scss"],
 })
-export class TransactionCategoriesComponent implements OnInit {
-  /**
-   * Ecomerce repeated component
-   */
-
+export class CarsComponent implements OnInit {
   page = { totalElements: 0, pageNumber: 1, size: 10 };
 
   breadCrumbItems: Array<{}>;
   typeValidationForm: FormGroup; // type validation form
   typesubmit: boolean = false;
 
-  transactionCategoryData: any = [];
+  carData: any = [];
+  makerData: any = [];
   sortBy = "";
   order = "";
   keyword: string = "";
   title = "Add";
   show: boolean = false;
-  tD = "transaction_categories";
+  cD = "cars";
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader> =
     Object.create(null);
   constructor(
@@ -43,15 +39,20 @@ export class TransactionCategoriesComponent implements OnInit {
   ngOnInit() {
     this.breadCrumbItems = [
       { label: "My Dashboard", href: "/dashboard" },
-      { label: "Transaction Category", active: true },
+      { label: "Car", active: true },
     ];
     this._fetchData();
+    this._fetchMakerData();
   }
 
   initForm() {
     this.typeValidationForm = this.formBuilder.group({
       id: 0,
-      category_name: ["", [Validators.required]],
+      car_id: ["", [Validators.required]],
+      vim: ["", [Validators.required]],
+      plate: ["", [Validators.required]],
+      purchase_date: ["", [Validators.required]],
+      maker_id: ["", [Validators.required]],
     });
   }
   conditionalrequiredValidator(client) {
@@ -84,17 +85,34 @@ export class TransactionCategoriesComponent implements OnInit {
     this.page.pageNumber = 1;
     this._fetchData();
   }
-  public _fetchData() {
+
+  // Get Makers
+  public _fetchMakerData() {
     this.authFackservice
       .get(
-        "admin/transactionCategories?page=" +
+        "admin/makers?page=" +
           this.page.pageNumber +
           "&perPage=10&keyword=" +
           this.keyword
       )
       .subscribe((res) => {
         if (res["status"] == true) {
-          this.transactionCategoryData = res["data"];
+          this.makerData = res["data"];
+          this.page.totalElements = res["elementCount"];
+        }
+      });
+  }
+  public _fetchData() {
+    this.authFackservice
+      .get(
+        "admin/cars?page=" +
+          this.page.pageNumber +
+          "&perPage=10&keyword=" +
+          this.keyword
+      )
+      .subscribe((res) => {
+        if (res["status"] == true) {
+          this.carData = res["data"];
           this.page.totalElements = res["elementCount"];
         }
       });
@@ -119,7 +137,11 @@ export class TransactionCategoriesComponent implements OnInit {
     this.title = "Edit";
     this.initForm();
     this.typeValidationForm.patchValue({
-      category_name: item.category_name,
+      car_id: item.car_id,
+      vim: item.vim,
+      plate: item.plate,
+      purchase_date: item.purchase_date,
+      maker_id: item.maker_id,
       id: item.id,
     });
     this.modalService.open(largeDataModal, {
@@ -165,7 +187,7 @@ export class TransactionCategoriesComponent implements OnInit {
               "&id=" +
               id +
               "&type=" +
-              this.tD,
+              this.cD,
             {}
           )
           .subscribe((res) => {
@@ -173,13 +195,13 @@ export class TransactionCategoriesComponent implements OnInit {
               if (currentTarget == 0)
                 Swal.fire(
                   "Approved!",
-                  "Selected Product Category has been Enabled.",
+                  "Selected Car has been Enabled.",
                   "success"
                 );
               else
                 Swal.fire(
                   "Rejected!",
-                  "Selected Product Category has been Disabled.",
+                  "Selected Car has been Disabled.",
                   "success"
                 );
               this._fetchData();
@@ -200,12 +222,12 @@ export class TransactionCategoriesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.authFackservice
-          .delete("admin/parameter?id=" + item.id + "&type=" + this.tD)
+          .delete("admin/parameter?id=" + item.id + "&type=" + this.cD)
           .subscribe((res) => {
             if (res["status"] == true) {
               Swal.fire(
                 "Deleted!",
-                "selected Product Category has been deleted.",
+                "selected Car has been deleted.",
                 "success"
               );
               this._fetchData();
@@ -235,22 +257,22 @@ export class TransactionCategoriesComponent implements OnInit {
     this.typesubmit = true;
     if (this.typeValidationForm.status == "INVALID") return;
     var formData: any = new FormData();
+    formData.append("car_id", this.typeValidationForm.value.car_id);
+    formData.append("vim", this.typeValidationForm.value.vim);
+    formData.append("plate", this.typeValidationForm.value.plate);
     formData.append(
-      "category_name",
-      this.typeValidationForm.value.category_name
+      "purchase_date",
+      this.typeValidationForm.value.purchase_date
     );
+    formData.append("maker_id", this.typeValidationForm.value.maker_id);
     let data = this.typeValidationForm.value;
     if (data.id == 0 || data.id == null) {
       this.authFackservice
-        .postMultipart("admin/transactionCategories", formData)
+        .postMultipart("admin/cars", formData)
         .subscribe((res) => {
           if (res["status"] == true) {
             this._fetchData();
-            Swal.fire(
-              "Success!",
-              "New Product Category has been added.",
-              "success"
-            );
+            Swal.fire("Success!", "New Car has been added.", "success");
           } else {
             Swal.fire("Error!", res["message"], "error");
           }
@@ -259,15 +281,11 @@ export class TransactionCategoriesComponent implements OnInit {
     } else {
       formData.append("id", this.typeValidationForm.value.id);
       this.authFackservice
-        .putMultipart("admin/transactionCategories", formData)
+        .putMultipart("admin/cars", formData)
         .subscribe((res) => {
           if (res["status"] == true) {
             this._fetchData();
-            Swal.fire(
-              "Success!",
-              "Selected Product Category has been updated.",
-              "success"
-            );
+            Swal.fire("Success!", "Selected Car has been updated.", "success");
           } else {
             Swal.fire("Error!", res["message"], "error");
           }

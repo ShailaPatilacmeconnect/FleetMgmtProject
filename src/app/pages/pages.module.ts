@@ -28,6 +28,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { RidersComponent } from './riders/riders.component';
 import { TransactionCategoriesComponent } from './transaction-categories/transaction-categories.component';
+import { BikesComponent } from './bikes/bikes.component';
+import { CarsComponent } from './cars/cars.component';
+import { UserTransactionsComponent } from './user-transactions/user-transactions.component';
+import { ImportComponent } from './user-transactions/import/import.component';
+import { TransactionDataModalComponent } from './user-transactions/transaction-data-modal/transaction-data-modal.component';
 // import { merchantComponent } from './merchant/merchant.component';
 // import { databaseComponent } from './database/database.component';
 // import { dbUserComponent } from './dbUser/dbUser.component';
@@ -43,7 +48,12 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   declarations: [
     NgbdSortableHeader,
     RidersComponent,
-    TransactionCategoriesComponent],
+    TransactionCategoriesComponent,
+    BikesComponent,
+    CarsComponent,
+    UserTransactionsComponent,
+    ImportComponent,
+    TransactionDataModalComponent],
   imports: [
     CommonModule,
     FormsModule,
