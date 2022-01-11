@@ -16,11 +16,8 @@ export class ImportComponent implements OnInit {
   // typeValidationForm: FormGroup;
   transactioncategoryData: any = [];
   userTransactionData: any = [];
-  identifierKey: Array<any> = [
-    { user_id:"user_id"},
-    { phone:"phone" }
-  ];
-  identifire:any=[]
+  identifierKey: Array<any> = [{ user_id: "user_id" }, { phone: "phone" }];
+  identifire: any = [];
   constructor(
     public activeModal: NgbActiveModal,
     public formBuilder: FormBuilder,
@@ -30,7 +27,7 @@ export class ImportComponent implements OnInit {
   ngOnInit() {
     this._fetchTransactionCategoriesData();
     this._fetchData();
-    this.identifire = this.getIdentifire()
+    this.identifire = this.getIdentifire();
     console.log(this.identifire);
   }
 
@@ -81,22 +78,20 @@ export class ImportComponent implements OnInit {
         }
       });
   }
+// CSV file Upload
+  onFileSelected(event) {
+    if (event.target.files[0].type != "application/vnd.ms-excel") {
+      Swal.fire("Failed!", "Please upload a valid file.", "error");
 
-  uploadFile(event: any) {
-    // var reader = new FileReader();
-    // reader.onload = (event: ProgressEvent) => {
-    //   this.img = (<FileReader>event.target).result;
-    // };
-    // reader.readAsDataURL(event.target.files[0]);
+      return;
+    }
     this.file = event.target.files[0];
-    console.log(this.file);
   }
   typeSubmit() {
     // this.typesubmit = true;
-    console.log("hi");
     // if (this.typeValidationForm.status == "INVALID") return;
     var formData: any = new FormData();
-    formData.append("file_path", this.typeValidationForm.value.file_path);
+    formData.append("file_path", this.file);
     formData.append(
       "transaction_category_id",
       this.typeValidationForm.value.transaction_category_id
@@ -112,7 +107,7 @@ export class ImportComponent implements OnInit {
       .subscribe((res) => {
         if (res["status"] == true) {
           this._fetchData();
-          Swal.fire("Success!", "New Car has been added.", "success");
+          Swal.fire("Success!", "Transaction has been added.", "success");
         } else {
           Swal.fire("Error!", res["message"], "error");
         }

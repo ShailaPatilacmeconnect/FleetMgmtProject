@@ -11,7 +11,7 @@
                         <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
                             <div class="form-group mb-2">
                                 <label>File</label>
-                                <input type="file" name="file_path" formControlName="file_path" (change)="uploadFile($event)">
+                                <input type="file" name="file_path" formControlName="file_path" (change)="onFileSelected($event)">
                             </div>
                             <div class="form-group mb-2">
                                 <label>Transaction Category</label>
@@ -25,7 +25,9 @@
                                 <label>Identifier</label>
                                 <!-- <input type="text" class="form-control" name="identifier_key" formControlName="identifier_key"> -->
                                 <select class="form-select" name="identifier_key" formControlName="identifier_key">
-                                    <option *ngFor="let data of identifire" value="{{data}}">{{data.user_id}}|{{data.phone}}</option>
+                                    <!-- <option *ngFor="let data of identifire" value="{{data}}">{{data.user_id}}|{{data.phone}}</option> -->
+                                    <option value="user_id">user_id</option>
+                                    <option value="phone">phone</option>
                                 </select>
                             </div>
                             <div class="form-group mb-2 col-md-12 mb-0 mt-3">

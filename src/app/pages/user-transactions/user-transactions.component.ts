@@ -158,7 +158,7 @@ export class UserTransactionsComponent implements OnInit {
       centered: true,
     });
   }
-  uploadFile($event,file: any) {
+  uploadFile($event, file: any) {
     // console.log("file_path");
     const formData = new FormData();
     formData.append("file", file, file.name);
@@ -167,7 +167,7 @@ export class UserTransactionsComponent implements OnInit {
       .subscribe((res) => {
         if (res["status"] == true) {
           this._fetchData();
-          Swal.fire("Success!", "New Car has been added.", "success");
+          Swal.fire("Success!", "New Transaction has been added.", "success");
         } else {
           Swal.fire("Error!", res["message"], "error");
         }
@@ -175,6 +175,37 @@ export class UserTransactionsComponent implements OnInit {
       });
     console.log($event.target.files[0]); // outputs the first file
   }
+
+  selectFile(type) {
+    type == 1
+      ? document.getElementById("file1").click()
+      : document.getElementById("file").click();
+  }
+
+  onFileSelected(event,type) {
+    if (event.target.files[0].type!= "application/vnd.ms-excel") {
+      Swal.fire("Failed!", "Please upload a valid file.", "error");
+
+      return;
+    }
+    var formData: any = new FormData();
+    formData.append("file_path", event.target.files[0]);
+    // let url = type == 2 ? "user/license/import" : "user/license/remove";
+    this.authFackservice.postMultipart("admin/fineTransactions/import", formData).subscribe((resp) => {
+      if (resp["status"] == true) {
+        Swal.fire("Success!", "Fine Transaction has been added.", "success");
+        this._fetchData();
+      } else {
+        console.log(resp["data"]);
+        Swal.fire(
+          "Failed!",
+          "Found " + resp["data"]["invalid"] + " Invalid Entries",
+          "error"
+        );
+      }
+    });
+  }
+
   import() {
     this.modalService.open(ImportComponent, {
       size: "sx",
@@ -268,13 +299,13 @@ export class UserTransactionsComponent implements OnInit {
               if (currentTarget == 0)
                 Swal.fire(
                   "Approved!",
-                  "Selected Car has been Enabled.",
+                  "Selected Transaction has been Enabled.",
                   "success"
                 );
               else
                 Swal.fire(
                   "Rejected!",
-                  "Selected Car has been Disabled.",
+                  "Selected Transaction has been Disabled.",
                   "success"
                 );
               this._fetchData();
@@ -300,7 +331,7 @@ export class UserTransactionsComponent implements OnInit {
             if (res["status"] == true) {
               Swal.fire(
                 "Deleted!",
-                "selected Car has been deleted.",
+                "selected Transaction has been deleted.",
                 "success"
               );
               this._fetchData();
@@ -345,7 +376,7 @@ export class UserTransactionsComponent implements OnInit {
         .subscribe((res) => {
           if (res["status"] == true) {
             this._fetchData();
-            Swal.fire("Success!", "New Car has been added.", "success");
+            Swal.fire("Success!", "New Transaction has been added.", "success");
           } else {
             Swal.fire("Error!", res["message"], "error");
           }
@@ -358,7 +389,7 @@ export class UserTransactionsComponent implements OnInit {
         .subscribe((res) => {
           if (res["status"] == true) {
             this._fetchData();
-            Swal.fire("Success!", "Selected Car has been updated.", "success");
+            Swal.fire("Success!", "Selected Transaction has been updated.", "success");
           } else {
             Swal.fire("Error!", res["message"], "error");
           }
