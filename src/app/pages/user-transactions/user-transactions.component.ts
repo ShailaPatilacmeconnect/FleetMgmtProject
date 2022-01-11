@@ -31,6 +31,7 @@ export class UserTransactionsComponent implements OnInit {
   show: boolean = false;
   cD = "cars";
   details: any;
+  file_path: string = "/C:/Users/Rahul/Documents/Fleet_fine_transactions.csv";
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader> =
     Object.create(null);
   constructor(
@@ -60,6 +61,7 @@ export class UserTransactionsComponent implements OnInit {
       amount: ["", [Validators.required]],
       message: ["", [Validators.required]],
       status: ["", [Validators.required]],
+      // file_path:[]
     });
   }
   conditionalrequiredValidator(client) {
@@ -155,6 +157,23 @@ export class UserTransactionsComponent implements OnInit {
       windowClass: "modal-holder",
       centered: true,
     });
+  }
+  uploadFile($event,file: any) {
+    // console.log("file_path");
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    this.authFackservice
+      .postMultipart("admin/fineTransactions/import", formData)
+      .subscribe((res) => {
+        if (res["status"] == true) {
+          this._fetchData();
+          Swal.fire("Success!", "New Car has been added.", "success");
+        } else {
+          Swal.fire("Error!", res["message"], "error");
+        }
+        this.modalService.dismissAll();
+      });
+    console.log($event.target.files[0]); // outputs the first file
   }
   import() {
     this.modalService.open(ImportComponent, {

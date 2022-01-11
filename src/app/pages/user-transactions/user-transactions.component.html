@@ -20,6 +20,10 @@
                                 <div>
                                     <div class="text-sm-end">
                                         <a href=" https://marshaldiag268.blob.core.windows.net/fleetapp/Fleet_transactions.csv" download="Sample_File"><button type="button" class="btn btn-primary mb-2 me-2"><i class="fa fa-download"></i>Sample File</button></a>
+                                        <input hidden type="file" #uploader (change)="uploadFile($event,file_path)" />
+                                        <button class="btn btn-primary mb-2 me-2" (click)="uploader.click()">
+                                            <i class="mdi mdi-plus me-1"></i>Fine Transactions
+                                        </button>
                                         <button type="button" class="btn btn-primary mb-2 me-2" (click)="export('csv')">
                                             <i class="mdi mdi-plus me-1"></i> Export
                                         </button>

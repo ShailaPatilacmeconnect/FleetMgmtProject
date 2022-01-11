@@ -17,9 +17,8 @@ export class ImportComponent implements OnInit {
   transactioncategoryData: any = [];
   userTransactionData: any = [];
   identifierKey: Array<any> = [
-    { user_id: 1, phone: 1234567890 },
-    { user_id: 2, phone: 1234567890 },
-    { user_id: 3, phone: 1234567890 },
+    { user_id:"user_id"},
+    { phone:"phone" }
   ];
   identifire:any=[]
   constructor(
