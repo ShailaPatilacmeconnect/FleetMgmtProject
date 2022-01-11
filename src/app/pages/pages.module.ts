@@ -33,6 +33,13 @@ import { CarsComponent } from './cars/cars.component';
 import { UserTransactionsComponent } from './user-transactions/user-transactions.component';
 import { ImportComponent } from './user-transactions/import/import.component';
 import { TransactionDataModalComponent } from './user-transactions/transaction-data-modal/transaction-data-modal.component';
+import { MakersComponent } from "./makers/makers.component";
+import { MobileSimComponent } from "./mobile-sim/mobile-sim.component";
+import { RiderBikeHistoryComponent } from "./rider-bike-history/rider-bike-history.component";
+import { RiderCarHistoryComponent } from "./rider-car-history/rider-car-history.component";
+import { RiderSimHistoryComponent } from "./rider-sim-history/rider-sim-history.component";
+import { LoansComponent } from "./loans/loans.component";
+import { RecurringPaymentsComponent } from "./recurring-payments/recurring-payments.component";
 // import { merchantComponent } from './merchant/merchant.component';
 // import { databaseComponent } from './database/database.component';
 // import { dbUserComponent } from './dbUser/dbUser.component';
@@ -53,7 +60,16 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CarsComponent,
     UserTransactionsComponent,
     ImportComponent,
-    TransactionDataModalComponent],
+    TransactionDataModalComponent,
+    MakersComponent,
+    MobileSimComponent,
+    RiderBikeHistoryComponent,
+    RiderCarHistoryComponent,
+    RiderSimHistoryComponent,
+    LoansComponent,
+    RecurringPaymentsComponent,
+  ],
+
   imports: [
     CommonModule,
     FormsModule,
@@ -75,9 +91,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     LightboxModule,
     NgSelectModule,
     NgbAlertModule,
-    CKEditorModule
+    CKEditorModule,
   ],
-  exports:[NgbdSortableHeader],
-
+  exports: [NgbdSortableHeader],
 })
-export class PagesModule { }
+export class PagesModule {}

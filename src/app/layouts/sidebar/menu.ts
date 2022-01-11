@@ -42,5 +42,47 @@ export const MENU: MenuItem[] = [
     icon: "bx bx-user",
     link: "/userTransactions",
   },
+  {
+    id: 6,
+    label: "Loans",
+    icon: "bx bx-user",
+    link: "/loans",
+  },
+  {
+    id: 5,
+    label: "Makers",
+    icon: "bx bx-user",
+    link: "/makers",
+  },
+  {
+    id: 5,
+    label: "Mobile Sim",
+    icon: "bx bx-user",
+    link: "/mobileSim",
+  },
+  {
+    id: 5,
+    label: "Recurring Payments",
+    icon: "bx bx-user",
+    link: "/recurringPayments",
+  },
+  {
+    id: 5,
+    label: "Rider Bike History",
+    icon: "bx bx-user",
+    link: "/riderBikeHistory",
+  },
+  {
+    id: 5,
+    label: "Rider Car History",
+    icon: "bx bx-user",
+    link: "/riderCarHistory",
+  },
+  {
+    id: 5,
+    label: "Rider Sim History",
+    icon: "bx bx-user",
+    link: "/riderSimHistory",
+  },
 ];
 
