@@ -84,17 +84,5 @@ export const MENU: MenuItem[] = [
     icon: "bx bx-user",
     link: "/riderSimHistory",
   },
-  {
-    id: 5,
-    label: "Manage Recurring Payments",
-    icon: "bx bx-user",
-    link: "/manageRecurringPayments",
-  },
-  {
-    id: 5,
-    label: "Rider Loans",
-    icon: "bx bx-user",
-    link: "/riderLoans",
-  },
 ];
 
