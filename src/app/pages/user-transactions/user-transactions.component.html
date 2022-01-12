@@ -56,8 +56,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let transactionInfo of userTransactionData " (click)="displayModal(largeDataModal1,transactionInfo)" >
-                                    <td>{{transactionInfo.transaction_id}}</td>
+                                <tr *ngFor="let transactionInfo of userTransactionData "  >
+                                    <td (click)="displayModal(largeDataModal1,transactionInfo)">{{transactionInfo.transaction_id}}</td>
                                     <td>{{transactionInfo.username}}</td>
                                     <td>{{transactionInfo.category_name}}</td>
                                     <td>{{transactionInfo.amount}}</td>
