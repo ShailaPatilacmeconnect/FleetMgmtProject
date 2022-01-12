@@ -39,6 +39,8 @@ import { RiderCarHistoryComponent } from "./rider-car-history/rider-car-history.
 import { RiderSimHistoryComponent } from "./rider-sim-history/rider-sim-history.component";
 import { LoansComponent } from "./loans/loans.component";
 import { RecurringPaymentsComponent } from "./recurring-payments/recurring-payments.component";
+import { ManageRecurringPaymentsComponent } from './manage-recurring-payments/manage-recurring-payments.component';
+import { RiderLoansComponent } from './rider-loans/rider-loans.component';
 // import { merchantComponent } from './merchant/merchant.component';
 // import { databaseComponent } from './database/database.component';
 // import { dbUserComponent } from './dbUser/dbUser.component';
@@ -67,6 +69,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     RiderSimHistoryComponent,
     LoansComponent,
     RecurringPaymentsComponent,
+    ManageRecurringPaymentsComponent,
+    RiderLoansComponent,
   ],
 
   imports: [

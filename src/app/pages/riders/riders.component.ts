@@ -64,6 +64,13 @@ export class RidersComponent implements OnInit {
       company_id3: ["", [Validators.required]],
     });
   }
+
+  getRiderLoans(user_id) {
+    this.router.navigate(["/riderLoans", user_id]);
+  }
+  getRiderRecurringPayments(user_id) {
+    this.router.navigate(["/manageRecurringPayments", user_id]);
+  }
   conditionalrequiredValidator(client) {
     //factory function
     return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -162,7 +169,13 @@ export class RidersComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.authFackservice
-          .put("admin/riders/status?value=" + currentTarget + "&user_id=" + user_id, {})
+          .put(
+            "admin/riders/status?value=" +
+              currentTarget +
+              "&user_id=" +
+              user_id,
+            {}
+          )
           .subscribe((res) => {
             if (res["status"] == true) {
               if (currentTarget == 0)

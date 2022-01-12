@@ -401,7 +401,7 @@ export class UserTransactionsComponent implements OnInit {
   export(type) {
     let parameter = "transactions";
     this.authFackservice
-      .getFile("admin/userTransactions?type=" + type)
+      .getFile("admin/userTransactions/export?type=csv")
       .subscribe((res: any) => {
         if (res.type == "application/json") {
         } else if (

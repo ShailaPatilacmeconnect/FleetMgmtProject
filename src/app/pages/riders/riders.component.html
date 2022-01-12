@@ -34,9 +34,8 @@
                             <thead>
                                 <tr>
                                     <th sortable="name" (sort)="onSort($event)">Name</th>
-                                    <th sortable="status" (sort)="onSort($event)" class="text-center">Action</th>
-                                    <th class="text-center">Edit</th>
-                                    <th class="text-center">Delete</th>
+                                    <th sortable="status" (sort)="onSort($event)" class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,15 +55,15 @@
                                                 (click)="editModal(largeDataModal,ridersInfo)"><i
                                                     class="fas fa-pencil-alt text-success me-2"></i>
                                             </a>
-
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div placement="bottom-end">
-                                            <a href="javascript: void(0);" (click)="deleteRow(ridersInfo)"><i
-                                                    class="fas fa-times text-success me-2"></i>
+                                            <a href="javascript: void(0);" (click)="deleteRow(ridersInfo)"><i class="fas fa-times text-success me-2"></i>
                                             </a>
-
+                                            <button type="button" class="btn btn-primary mb-2 me-2"
+                                            (click)="getRiderLoans(ridersInfo.user_id)">
+                                                Loans
+                                            </button>
+                                            <button type="button" class="btn btn-primary mb-2 me-2" (click)="getRiderRecurringPayments(ridersInfo.user_id)">
+                                                Recurring Payments
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

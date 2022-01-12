@@ -20,7 +20,7 @@ export class AuthfakeauthenticationService {
         this.currentstatusSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentstatus')));
         this.currentstatus = this.currentstatusSubject.asObservable();
     }
-
+    
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
@@ -70,7 +70,8 @@ export class AuthfakeauthenticationService {
         //   };
         return this.http.post<any>(environment.baseurl+'auth/login', form)
                    .pipe(map(res => {
-            this.apiStatusHandler.next({show:false});
+                       this.apiStatusHandler.next({ show: false });
+                       console.log(res)
                 // login successful if there's a jwt token in the response
                 if (res['status']==true) {
                     let decoded_value:any=jwt_decode(res['data'])
@@ -79,7 +80,7 @@ export class AuthfakeauthenticationService {
                     if(res['logo_path']!='')
                     localStorage.setItem('user_logo',res['logo_path']);
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                     localStorage.setItem('currentUser', JSON.stringify(decoded_value));
+                    localStorage.setItem('currentUser', JSON.stringify(decoded_value));
                     this.currentUserSubject.next(decoded_value);
                 }
                 return res;

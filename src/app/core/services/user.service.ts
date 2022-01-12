@@ -10,7 +10,7 @@ export class UserProfileService {
     getAll() {
         return this.http.get<User[]>(`/api/login`);
     }
-
+    
     register(user: User) {
         return this.http.post(`/users/register`, user);
     }

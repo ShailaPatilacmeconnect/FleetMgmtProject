@@ -1,0 +1,122 @@
+
+<div class="container-fluid">
+    <app-page-title title="Rider Loans" [breadcrumbItems]="breadCrumbItems"></app-page-title>  
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                 <div class="form-group mb-2">
+                   <label>Search</label>
+                   <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                 </div>
+               </div>
+               <div class="col-md-8">
+                 <div class="form-group mb-2 col-md-12">
+                   <label style="visibility: hidden;">report</label>
+                   <div class="text-sm-end"> 
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" (click)="export('csv')" class="btn btn-primary">Export</button>                              
+                      </div>                                         
+                   </div>
+                 </div>
+               </div>
+             </div>            
+            <div class="table-responsive" *ngIf="riderLoanData.length>0">
+              <table class="table dt-responsive nowrap datatables no-footer dtr-inline">
+                <thead>
+                  <tr>
+                    <th sortable="name" (sort)="onSort($event)">Loan</th>
+                    <th sortable="name" (sort)="onSort($event)">Max Amount</th>
+                    <th sortable="name" (sort)="onSort($event)">Per Month</th>
+                    <th sortable="status" (sort)="onSort($event)" class="text-center">Status</th>
+                    <th class="text-center">Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let riderLoan of riderLoanData ">
+                    <td >{{riderLoan.title}}</td>
+                    <td >{{riderLoan.max_amount}}</td>
+                    <td >{{riderLoan.per_month}}</td>                    
+                    <td>
+                      <div class="form-check form-switch text-center mb-2" dir="ltr">
+                      <input type="checkbox"  class="form-check-input" (change)="toggleFunction($event,riderLoan.id)" [checked]="!riderLoan.status" [id]="riderLoan.id">
+                      <label class="custom-control-label" [for]="riderLoan.id"></label>
+                    </div></td> 
+                    <td  class="text-center">
+                      <div placement="bottom-end">
+                        <a href="javascript: void(0);" (click)="editModal(largeDataModal,riderLoan)"><i
+                          class="fas fa-pencil-alt text-success me-2"></i>
+                        </a>                      
+                      </div>
+                    </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+        
+            <app-pagination [page]="pageCopy()" *ngIf="riderLoanData.length>0" (newItemEvent)="changePage($event)"></app-pagination>
+            <div class="table-responsive text-primary" *ngIf="riderLoanData.length==0">
+              * 0 Results Found.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+  </div>
+  <ng-template #largeDataModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">{{title}} MobileSIM</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
+                <!--  Maximun Amount-->
+                <div class="form-group mb-2">
+                  <label> Maximun Amount</label>
+                  <input  type="text" class="form-control" formControlName="max_amount"
+                    [ngClass]="{'is-invalid': typesubmit && type.max_amount.errors}"/>
+                  <div *ngIf="typesubmit && type.max_amount.errors" class="invalid-feedback">
+                    <span *ngIf="type.max_amount.errors.required"> This is required</span>
+                    
+                  </div>
+                </div>
+  
+                 <!--Per Month -->
+                 <div class="form-group mb-2">
+                    <label> Per Month</label>
+                    <input type="text" class="form-control" formControlName="per_month" 
+                      [ngClass]="{'is-invalid': typesubmit && type.per_month.errors}"/>
+
+                    <div *ngIf="typesubmit && type.per_month.errors" class="invalid-feedback">
+                      <span *ngIf="type.per_month.errors.required"> This is required.</span>
+
+                    </div>
+                  </div>
+                
+                <div class="form-group mb-2 col-md-12 mb-0 mt-3">
+                  <div>
+                    <button type="reset" class="btn btn-secondary float-end">
+                      Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary  float-end me-1">
+                      Submit
+                    </button>
+                  </div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    
+       
+      </div>
+    </div>
+  </ng-template>
+  
