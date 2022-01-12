@@ -29,9 +29,9 @@ const routes: Routes = [
   { path: "makers", component: MakersComponent },
   { path: "mobileSim", component: MobileSimComponent },
   { path: "recurringPayments", component: RecurringPaymentsComponent },
-  { path: "riderBikeHistory", component: RiderBikeHistoryComponent },
-  { path: "riderCarHistory", component: RiderCarHistoryComponent },
-  { path: "riderSimHistory", component: RiderSimHistoryComponent },
+  { path: "riderBikeHistory/:user_id", component: RiderBikeHistoryComponent },
+  { path: "riderCarHistory/:user_id", component: RiderCarHistoryComponent },
+  { path: "riderSimHistory/:user_id", component: RiderSimHistoryComponent },
   {
     path: "manageRecurringPayments/:user_id",
     component: ManageRecurringPaymentsComponent,

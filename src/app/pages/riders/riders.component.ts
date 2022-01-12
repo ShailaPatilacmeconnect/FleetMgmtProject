@@ -6,6 +6,7 @@ import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.se
 import { notificationService } from "src/app/core/services/notofication.service";
 import Swal from 'sweetalert2';
 import { NgbdSortableHeader, SortEvent } from '../table-sortable';
+import { RiderImportComponent } from './rider-import/rider-import.component';
 
 @Component({
   selector: "app-riders",
@@ -22,7 +23,8 @@ export class RidersComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   typeValidationForm: FormGroup; // type validation form
   typesubmit: boolean = false;
-
+  hrefLink: any;
+  blob: Blob;
   riderData: any = [];
   sortBy = "";
   order = "";
@@ -71,6 +73,15 @@ export class RidersComponent implements OnInit {
   getRiderRecurringPayments(user_id) {
     this.router.navigate(["/manageRecurringPayments", user_id]);
   }
+  getCarHistory(user_id) {
+    this.router.navigate(["/riderCarHistory", user_id]);
+  }
+  getBikeHistory(user_id) {
+    this.router.navigate(["/riderBikeHistory", user_id]);
+  }
+  getSimHistory(user_id) {
+    this.router.navigate(["/riderSimHistory", user_id]);
+  }
   conditionalrequiredValidator(client) {
     //factory function
     return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -116,6 +127,38 @@ export class RidersComponent implements OnInit {
   }
   get type() {
     return this.typeValidationForm.controls;
+  }
+
+  export(type) {
+    let parameter = "transactions";
+    this.authFackservice
+      .getFile("admin/userTransactions/export?type=csv")
+      .subscribe((res: any) => {
+        if (res.type == "application/json") {
+        } else if (
+          res.type == "application/vnd.openxmlformats" ||
+          res.type == "text/csv"
+        ) {
+          this.blob = new Blob([res], { type: res.type });
+          var downloadURL = URL.createObjectURL(this.blob);
+          //this.sanitizer.bypassSecurityTrustResourceUrl()
+          this.hrefLink = downloadURL;
+          const link = document.createElement("a");
+          link.setAttribute("target", "_blank");
+          link.setAttribute("href", this.hrefLink);
+          link.setAttribute("download", parameter + `.` + type);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
+      });
+  }
+  import() {
+    this.modalService.open(RiderImportComponent, {
+      size: "sx",
+      windowClass: "modal-holder",
+      centered: true,
+    });
   }
   largeModal(largeDataModal: any) {
     this.title = "Add";

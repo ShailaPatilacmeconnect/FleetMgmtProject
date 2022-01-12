@@ -29,7 +29,6 @@ export class TopbarComponent implements OnInit {
   countryName;
   valueset;
   currentUser: any;
-  userPhoto:any
   constructor(@Inject(DOCUMENT) private document: any,public formBuilder: FormBuilder, private router: Router, private authfackservice: AuthfakeauthenticationService,
     private authFackservice: AuthfakeauthenticationService,private modalService: NgbModal,
     public languageService: LanguageService,
@@ -55,8 +54,6 @@ export class TopbarComponent implements OnInit {
     this.openMobileMenu = false;
     this.element = document.documentElement;
     this.currentUser = this.authfackservice.currentUserValue;
-    console.log(this.currentUser)
-    this.userPhoto = this.authFackservice.currentUserValue;
     this.initForm();
 
     this.configData = {

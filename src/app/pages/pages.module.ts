@@ -41,6 +41,9 @@ import { LoansComponent } from "./loans/loans.component";
 import { RecurringPaymentsComponent } from "./recurring-payments/recurring-payments.component";
 import { ManageRecurringPaymentsComponent } from './manage-recurring-payments/manage-recurring-payments.component';
 import { RiderLoansComponent } from './rider-loans/rider-loans.component';
+import { RiderImportComponent } from './riders/rider-import/rider-import.component';
+import { CarImportComponent } from './cars/car-import/car-import.component';
+import { BikeImportComponent } from './bikes/bike-import/bike-import.component';
 // import { merchantComponent } from './merchant/merchant.component';
 // import { databaseComponent } from './database/database.component';
 // import { dbUserComponent } from './dbUser/dbUser.component';
@@ -71,6 +74,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     RecurringPaymentsComponent,
     ManageRecurringPaymentsComponent,
     RiderLoansComponent,
+    RiderImportComponent,
+    CarImportComponent,
+    BikeImportComponent,
   ],
 
   imports: [

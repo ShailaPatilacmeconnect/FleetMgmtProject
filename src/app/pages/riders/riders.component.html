@@ -19,6 +19,12 @@
                                 <label style="visibility: hidden;">report</label>
                                 <div>
                                     <div class="text-sm-end">
+                                        <button type="button" class="btn btn-primary mb-2 me-2" (click)="export('csv')">
+                                            <i class="mdi mdi-plus me-1"></i> Export
+                                        </button>
+                                        <button type="button" class="btn btn-primary mb-2 me-2" (click)="import()">
+                                            <i class="mdi mdi-plus me-1"></i> Import
+                                        </button>
                                         <button type="button" class="btn btn-primary mb-2 me-2"
                                             (click)="largeModal(largeDataModal)">
                                             <i class="mdi mdi-plus me-1"></i> New Rider
@@ -59,10 +65,19 @@
                                             </a>
                                             <button type="button" class="btn btn-primary mb-2 me-2"
                                             (click)="getRiderLoans(ridersInfo.user_id)">
-                                                Loans
+                                                <i class="fas fa-money-check-alt"></i>
                                             </button>
                                             <button type="button" class="btn btn-primary mb-2 me-2" (click)="getRiderRecurringPayments(ridersInfo.user_id)">
-                                                Recurring Payments
+                                                <i class="far fa-credit-card"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary mb-2 me-2" (click)="getCarHistory(ridersInfo.user_id)">
+                                                <i class="fas fa-car"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary mb-2 me-2" (click)="getBikeHistory(ridersInfo.user_id)">
+                                                <i class="fas fa-motorcycle"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary mb-2 me-2" (click)="getSimHistory(ridersInfo.user_id)">
+                                                <i class="fas fa-sim-card"></i>
                                             </button>
                                         </div>
                                     </td>

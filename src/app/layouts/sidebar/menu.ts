@@ -66,23 +66,23 @@ export const MENU: MenuItem[] = [
     icon: "bx bx-user",
     link: "/recurringPayments",
   },
-  {
-    id: 5,
-    label: "Rider Bike History",
-    icon: "bx bx-user",
-    link: "/riderBikeHistory",
-  },
-  {
-    id: 5,
-    label: "Rider Car History",
-    icon: "bx bx-user",
-    link: "/riderCarHistory",
-  },
-  {
-    id: 5,
-    label: "Rider Sim History",
-    icon: "bx bx-user",
-    link: "/riderSimHistory",
-  },
+  // {
+  //   id: 5,
+  //   label: "Rider Bike History",
+  //   icon: "bx bx-user",
+  //   link: "/riderBikeHistory",
+  // },
+  // {
+  //   id: 5,
+  //   label: "Rider Car History",
+  //   icon: "bx bx-user",
+  //   link: "/riderCarHistory",
+  // },
+  // {
+  //   id: 5,
+  //   label: "Rider Sim History",
+  //   icon: "bx bx-user",
+  //   link: "/riderSimHistory",
+  // },
 ];
 
