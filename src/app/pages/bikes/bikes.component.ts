@@ -126,7 +126,7 @@ export class BikesComponent implements OnInit {
   export(type) {
     let parameter = "transactions";
     this.authFackservice
-      .getFile("admin/userTransactions/export?type=csv")
+      .getFile("admin/bikes/export?type=csv")
       .subscribe((res: any) => {
         if (res.type == "application/json") {
         } else if (
@@ -147,12 +147,30 @@ export class BikesComponent implements OnInit {
         }
       });
   }
-  import() {
-    this.modalService.open(BikeImportComponent, {
-      size: "sx",
-      windowClass: "modal-holder",
-      centered: true,
-    });
+  onFileSelected(event) {
+    if (event.target.files[0].type != "application/vnd.ms-excel") {
+      Swal.fire("Failed!", "Please upload a valid file.", "error");
+
+      return;
+    }
+    var formData: any = new FormData();
+    formData.append("file_path", event.target.files[0]);
+    // let url = type == 2 ? "user/license/import" : "user/license/remove";
+    this.authFackservice
+      .postMultipart("admin/bikes/import", formData)
+      .subscribe((resp) => {
+        if (resp["status"] == true) {
+          Swal.fire("Success!", "Fine Transaction has been added.", "success");
+          this._fetchData();
+        } else {
+          console.log(resp["data"]);
+          Swal.fire(
+            "Failed!",
+            "Found " + resp["data"]["invalid"] + " Invalid Entries",
+            "error"
+          );
+        }
+      });
   }
   largeModal(largeDataModal: any) {
     this.title = "Add";

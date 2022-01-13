@@ -1,12 +1,17 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.service';
+import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
 import { notificationService } from "src/app/core/services/notofication.service";
-import Swal from 'sweetalert2';
-import { NgbdSortableHeader, SortEvent } from '../table-sortable';
-import { RiderImportComponent } from './rider-import/rider-import.component';
+import Swal from "sweetalert2";
+import { NgbdSortableHeader, SortEvent } from "../table-sortable";
+import { RiderImportComponent } from "./rider-import/rider-import.component";
 
 @Component({
   selector: "app-riders",
@@ -132,7 +137,7 @@ export class RidersComponent implements OnInit {
   export(type) {
     let parameter = "transactions";
     this.authFackservice
-      .getFile("admin/userTransactions/export?type=csv")
+      .getFile("admin/riders/export?type=csv")
       .subscribe((res: any) => {
         if (res.type == "application/json") {
         } else if (
@@ -153,12 +158,30 @@ export class RidersComponent implements OnInit {
         }
       });
   }
-  import() {
-    this.modalService.open(RiderImportComponent, {
-      size: "sx",
-      windowClass: "modal-holder",
-      centered: true,
-    });
+  onFileSelected(event) {
+    if (event.target.files[0].type != "application/vnd.ms-excel") {
+      Swal.fire("Failed!", "Please upload a valid file.", "error");
+
+      return;
+    }
+    var formData: any = new FormData();
+    formData.append("file_path", event.target.files[0]);
+    // let url = type == 2 ? "user/license/import" : "user/license/remove";
+    this.authFackservice
+      .postMultipart("admin/riders/import", formData)
+      .subscribe((resp) => {
+        if (resp["status"] == true) {
+          Swal.fire("Success!", "Fine Transaction has been added.", "success");
+          this._fetchData();
+        } else {
+          console.log(resp["data"]);
+          Swal.fire(
+            "Failed!",
+            "Found " + resp["data"]["invalid"] + " Invalid Entries",
+            "error"
+          );
+        }
+      });
   }
   largeModal(largeDataModal: any) {
     this.title = "Add";

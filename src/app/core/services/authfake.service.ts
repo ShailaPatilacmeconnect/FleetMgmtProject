@@ -61,24 +61,25 @@ export class AuthfakeauthenticationService {
             }));
     }
     login(form) {
+        // console.log(form)
         this.apiStatusHandler.next({show:true});
         // const httpOptions = {
         //     headers: new HttpHeaders({
         //       'Content-Type' : 'application/json',
         //       'Access-Control-Allow-Origin':'*',
         //     })
-        //   };
+        //    };
         return this.http.post<any>(environment.baseurl+'auth/login', form)
-                   .pipe(map(res => {
-                       this.apiStatusHandler.next({ show: false });
-                       console.log(res)
+                    .pipe(map(res => {
+                        this.apiStatusHandler.next({ show: false });
+                        console.log(res)
                 // login successful if there's a jwt token in the response
                 if (res['status']==true) {
                     let decoded_value:any=jwt_decode(res['data'])
                     console.log(decoded_value)
                     decoded_value['token']=res['data'];
-                    if(res['logo_path']!='')
-                    localStorage.setItem('user_logo',res['logo_path']);
+                    if (res["profile_path"] != '""')
+                        localStorage.setItem("user_logo", res["profile_path"]);
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(decoded_value));
                     this.currentUserSubject.next(decoded_value);
