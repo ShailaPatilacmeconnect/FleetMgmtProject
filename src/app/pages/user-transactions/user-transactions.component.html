@@ -62,30 +62,11 @@
                                     <td>{{transactionInfo.category_name}}</td>
                                     <td>{{transactionInfo.amount}}</td>
                                     <td>{{transactionInfo.updated_wallet_balance}}</td>
-                                    <td [ngClass]="{
-                                        'text-success':transactionInfo.transaction_type == '2',
-                                        'text-danger':transactionInfo.transaction_type == '1'
-                                        }">{{transactionInfo.transaction_type==1?"Credit" : "Debit" }}</td>
-                                    <td>{{transactionInfo.created_at|date}}</td>
-                                    <!-- <td>
-                                        <div class="form-check form-switch  mb-2" dir="ltr">
-                                            <input type="checkbox" class="form-check-input"
-                                                (click)="toggleFunction($event,transactionInfo.id)" [checked]="!transactionInfo.status"
-                                                [id]="transactionInfo.id">
-                                            <label class="custom-control-label" [for]="transactionInfo.id"></label>
-                                        </div>
-                                    </td> -->
-                                    <td class="text-center">
-                                        <div placement="bottom-end">
-                                            <a href="javascript: void(0);"
-                                                (click)="editModal(largeDataModal,transactionInfo)"><i
-                                                    class="fas fa-pencil-alt text-success me-2"></i>
-                                            </a>
-                                            <a href="javascript: void(0);" (click)="deleteRow(transactionInfo)">
-                                                <i class="fas fa-times text-success me-2"></i>
-                                            </a>
-                                        </div>
+                                    <td>
+                                        <span *ngIf="transactionInfo.transaction_type == 2" class="badge badge-pill badge-succeess badge-soft-success font-size-12">Debit</span>
+                                        <span *ngIf="transactionInfo.transaction_type == 1" class="badge badge-pill badge-danger badge-soft-danger font-size-12">Credit</span>
                                     </td>
+                                    <td>{{transactionInfo.created_at|date}}</td>
                                 </tr>
                             </tbody>
                         </table>

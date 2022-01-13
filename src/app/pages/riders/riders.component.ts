@@ -11,7 +11,6 @@ import { AuthfakeauthenticationService } from "src/app/core/services/authfake.se
 import { notificationService } from "src/app/core/services/notofication.service";
 import Swal from "sweetalert2";
 import { NgbdSortableHeader, SortEvent } from "../table-sortable";
-import { RiderImportComponent } from "./rider-import/rider-import.component";
 
 @Component({
   selector: "app-riders",

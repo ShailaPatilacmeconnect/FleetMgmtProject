@@ -31,7 +31,7 @@
                     <th sortable="name" (sort)="onSort($event)">Max Amount</th>
                     <th sortable="name" (sort)="onSort($event)">Per Month</th>
                     <th sortable="status" (sort)="onSort($event)" class="text-center">Status</th>
-                    <th class="text-center">Edit</th>
+                    <th class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
                     <td >{{riderLoan.max_amount}}</td>
                     <td >{{riderLoan.per_month}}</td>                    
                     <td>
-                      <div class="form-check form-switch text-center mb-2" dir="ltr">
+                      <div class="form-check form-switch text-center mb-2 d-flex justify-content-center text-center" dir="ltr">
                       <input type="checkbox"  class="form-check-input" (change)="toggleFunction($event,riderLoan.id)" [checked]="!riderLoan.status" [id]="riderLoan.id">
                       <label class="custom-control-label" [for]="riderLoan.id"></label>
                     </div></td> 

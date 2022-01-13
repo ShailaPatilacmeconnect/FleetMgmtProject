@@ -41,7 +41,7 @@
                             <thead>
                                 <tr>
                                     <th sortable="name" (sort)="onSort($event)">Name</th>
-                                    <th sortable="status" (sort)="onSort($event)" class="text-center">Status</th>
+                                    <th sortable="status" (sort)="onSort($event)" class=" text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -49,14 +49,53 @@
                                 <tr *ngFor="let ridersInfo of riderData ">
                                     <td>{{ridersInfo.name}}</td>
                                     <td>
-                                        <div class="form-check form-switch  mb-2" dir="ltr">
+                                        <div class="form-check form-switch  mb-2 d-flex justify-content-center text-center" dir="ltr">
                                             <input type="checkbox" class="form-check-input"
                                                 (change)="toggleFunction($event,ridersInfo.user_id)"
                                                 [checked]="!ridersInfo.user_status" [id]="ridersInfo.user_id">
                                             <label class="custom-control-label" [for]="ridersInfo.user_id"></label>
                                         </div>
                                     </td>
-                                    <td class="text-center">
+                                    <td >
+                                        <div class="row d-flex justify-content-center text-center">
+                                            <div placement="bottom-end" class="col-1">
+                                                <a href="javascript: void(0);" (click)="editModal(largeDataModal,ridersInfo)"><i
+                                                        class="fas fa-pencil-alt text-success me-2"></i>
+                                                </a>
+                                            </div>
+                                            <div placement="bottom-end" class="col-1">
+                                                <a href="javascript: void(0);" (click)="deleteRow(ridersInfo)">
+                                                    <i class="fas fa-trash-alt text-danger me-2"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-1">
+                                                <button type="button" class="btn btn-primary mb-2 me-2" (click)="getRiderLoans(ridersInfo.user_id)">
+                                                    <i class="fas fa-money-check-alt"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-1">
+                                                <button type="button" class="btn btn-primary mb-2 me-2" (click)="getRiderRecurringPayments(ridersInfo.user_id)">
+                                                    <i class="far fa-credit-card"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-1">
+                                                <button type="button" class="btn btn-primary mb-2 me-2" (click)="getCarHistory(ridersInfo.user_id)">
+                                                    <i class="fas fa-car"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-1">
+                                                <button type="button" class="btn btn-primary mb-2 me-2" (click)="getBikeHistory(ridersInfo.user_id)">
+                                                    <i class="fas fa-motorcycle"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-1">
+                                                <button type="button" class="btn btn-primary mb-2 me-2" (click)="getSimHistory(ridersInfo.user_id)">
+                                                    <i class="fas fa-sim-card"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- <td class="text-center">
                                         <div placement="bottom-end">
                                             <a href="javascript: void(0);"
                                                 (click)="editModal(largeDataModal,ridersInfo)"><i
@@ -81,7 +120,7 @@
                                                 <i class="fas fa-sim-card"></i>
                                             </button>
                                         </div>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>

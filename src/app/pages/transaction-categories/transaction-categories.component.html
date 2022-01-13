@@ -42,7 +42,7 @@
                                 <tr *ngFor="let transactionData of transactionCategoryData ">
                                     <td>{{transactionData.category_name}}</td>
                                     <td>
-                                        <div class="form-check form-switch  mb-2" dir="ltr">
+                                        <div class="form-check form-switch  mb-2 d-flex justify-content-center text-center" dir="ltr">
                                             <input type="checkbox" class="form-check-input"
                                                 (click)="toggleFunction($event,transactionData.id)"
                                                 [checked]="!transactionData.status" [id]="transactionData.id">
@@ -50,14 +50,17 @@
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <div placement="bottom-end">
-                                            <a href="javascript: void(0);"
-                                                (click)="editModal(largeDataModal,transactionData)"><i
-                                                    class="fas fa-pencil-alt text-success me-2"></i>
-                                            </a>
-                                            <a href="javascript: void(0);" (click)="deleteRow(transactionData)">
-                                                <i class="fas fa-times text-success me-2"></i>
-                                            </a>
+                                        <div class="row d-flex justify-content-center text-center">
+                                            <div placement="bottom-end" class="col-3">
+                                                <a href="javascript: void(0);" (click)="editModal(largeDataModal,transactionData)"><i
+                                                        class="fas fa-pencil-alt text-success me-2"></i>
+                                                </a>
+                                            </div>
+                                            <div placement="bottom-end" class="col-3">
+                                                <a href="javascript: void(0);" (click)="deleteRow(transactionData)">
+                                                    <i class="fas fa-trash-alt text-danger me-2"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

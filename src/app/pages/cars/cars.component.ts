@@ -6,7 +6,6 @@ import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.se
 import { notificationService } from "src/app/core/services/notofication.service";
 import Swal from 'sweetalert2';
 import { NgbdSortableHeader, SortEvent } from '../table-sortable';
-import { CarImportComponent } from './car-import/car-import.component';
 @Component({
   selector: "app-cars",
   templateUrl: "./cars.component.html",
