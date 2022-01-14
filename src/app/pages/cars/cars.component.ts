@@ -6,6 +6,7 @@ import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.se
 import { notificationService } from "src/app/core/services/notofication.service";
 import Swal from 'sweetalert2';
 import { NgbdSortableHeader, SortEvent } from '../table-sortable';
+import { CarsImportComponent } from './cars-import/cars-import.component';
 @Component({
   selector: "app-cars",
   templateUrl: "./cars.component.html",
@@ -170,13 +171,20 @@ export class CarsComponent implements OnInit {
         }
       });
   }
+  import() {
+    this.modalService.open(CarsImportComponent, {
+      size: "xs",
+      windowClass: "modal-holder",
+      centered: true,
+    });
+  }
   largeModal(largeDataModal: any) {
     this.title = "Add";
     this.typesubmit = false;
     this.initForm();
     this.typeValidationForm.reset();
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });
@@ -195,7 +203,7 @@ export class CarsComponent implements OnInit {
       id: item.id,
     });
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });

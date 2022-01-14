@@ -115,7 +115,7 @@ export class MakersComponent implements OnInit {
     this.initForm();
     this.typeValidationForm.reset();
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });
@@ -131,7 +131,7 @@ export class MakersComponent implements OnInit {
       id: item.id,
     });
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });

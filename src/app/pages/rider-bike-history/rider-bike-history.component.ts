@@ -108,7 +108,7 @@ export class RiderBikeHistoryComponent implements OnInit {
     this.initForm();
     this.typeValidationForm.reset();
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });

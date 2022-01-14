@@ -6,6 +6,7 @@ import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.se
 import { notificationService } from "src/app/core/services/notofication.service";
 import Swal from 'sweetalert2';
 import { NgbdSortableHeader, SortEvent } from '../table-sortable';
+import { BikeImportComponent } from './bike-import/bike-import.component';
 
 @Component({
   selector: "app-bikes",
@@ -171,13 +172,20 @@ export class BikesComponent implements OnInit {
         }
       });
   }
+  import() {
+    this.modalService.open(BikeImportComponent, {
+      size: "xs",
+      windowClass: "modal-holder",
+      centered: true,
+    });
+  }
   largeModal(largeDataModal: any) {
     this.title = "Add";
     this.typesubmit = false;
     this.initForm();
     this.typeValidationForm.reset();
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });
@@ -196,7 +204,7 @@ export class BikesComponent implements OnInit {
       id: item.id,
     });
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });

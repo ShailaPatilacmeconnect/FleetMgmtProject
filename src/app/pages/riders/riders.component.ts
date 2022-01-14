@@ -11,6 +11,7 @@ import { AuthfakeauthenticationService } from "src/app/core/services/authfake.se
 import { notificationService } from "src/app/core/services/notofication.service";
 import Swal from "sweetalert2";
 import { NgbdSortableHeader, SortEvent } from "../table-sortable";
+import { RiderImportComponent } from "./rider-import/rider-import.component";
 
 @Component({
   selector: "app-riders",
@@ -34,6 +35,7 @@ export class RidersComponent implements OnInit {
   order = "";
   keyword: string = "";
   title = "Add";
+  file: any;
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader> =
     Object.create(null);
   constructor(
@@ -157,38 +159,13 @@ export class RidersComponent implements OnInit {
         }
       });
   }
-  onFileSelected(event) {
-    if (event.target.files[0].type != "application/vnd.ms-excel") {
-      Swal.fire("Failed!", "Please upload a valid file.", "error");
-
-      return;
-    }
-    var formData: any = new FormData();
-    formData.append("file_path", event.target.files[0]);
-    // let url = type == 2 ? "user/license/import" : "user/license/remove";
-    this.authFackservice
-      .postMultipart("admin/riders/import", formData)
-      .subscribe((resp) => {
-        if (resp["status"] == true) {
-          Swal.fire("Success!", "Fine Transaction has been added.", "success");
-          this._fetchData();
-        } else {
-          console.log(resp["data"]);
-          Swal.fire(
-            "Failed!",
-            "Found " + resp["data"]["invalid"] + " Invalid Entries",
-            "error"
-          );
-        }
-      });
-  }
   largeModal(largeDataModal: any) {
     this.title = "Add";
     this.typesubmit = false;
     this.initForm();
     this.typeValidationForm.reset();
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "sx",
       windowClass: "modal-holder",
       centered: true,
     });
@@ -214,7 +191,14 @@ export class RidersComponent implements OnInit {
       centered: true,
     });
   }
-
+  // Import Modal
+  import() {
+    this.modalService.open(RiderImportComponent, {
+      size: "xs",
+      windowClass: "modal-holder",
+      centered: true,
+    });
+  }
   toggleFunction(event, user_id) {
     let currentTarget = event.currentTarget.checked == true ? 0 : 1;
     let text = "Are you sure to Disable";

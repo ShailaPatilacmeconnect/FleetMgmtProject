@@ -34,6 +34,7 @@
                             <thead>
                                 <tr>
                                     <th sortable="name" (sort)="onSort($event)">Make Name</th>
+                                    <th sortable="name" (sort)="onSort($event)">Type</th>
                                     <th sortable="status" (sort)="onSort($event)" class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -41,7 +42,7 @@
                             <tbody>
                                 <tr *ngFor="let makers of makersData ">
                                     <td>{{makers.name}}</td>
-
+                                    <td>{{makers.type}}</td>
                                     <td>
                                         <div class="form-check form-switch text-center mb-2 d-flex justify-content-center text-center"
                                             dir="ltr">
@@ -53,12 +54,12 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="row d-flex justify-content-center text-center">
-                                            <div placement="bottom-end" class="col-3">
+                                            <div placement="bottom-end" class="col-2">
                                                 <a href="javascript: void(0);" (click)="editModal(largeDataModal,makers)"><i
                                                         class="fas fa-pencil-alt text-success me-2"></i>
                                                 </a>
                                             </div>
-                                            <div placement="bottom-end" class="col-3">
+                                            <div placement="bottom-end" class="col-2">
                                                 <a href="javascript: void(0);" (click)="deleteRow(makers)">
                                                     <i class="fas fa-trash-alt text-danger me-2"></i>
                                                 </a>
@@ -92,36 +93,38 @@
                 <div class="card">
                     <div class="card-body">
                         <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
-                            <!--  Name -->
-                            <div class="form-group mb-2">
-                                <label> Name</label>
-                                <input type="text" class="form-control" formControlName="name"
-                                    [ngClass]="{'is-invalid': typesubmit && type.name.errors}" />
-                                <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
-                                    <span *ngIf="type.name.errors.required"> Name is required.</span>
+                            <div class="row">
+                                <!--  Name -->
+                                <div class="form-group mb-2 col-6">
+                                    <label> Name</label>
+                                    <input type="text" class="form-control" formControlName="name"
+                                        [ngClass]="{'is-invalid': typesubmit && type.name.errors}" />
+                                    <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
+                                        <span *ngIf="type.name.errors.required"> Name is required.</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <!--Type -->
-                            <div class="form-group mb-2">
-                                <label>Type </label>
-                                <select class="form-select" formControlName="type" placeholder="select any type"
-                                    [ngClass]="{'is-invalid': typesubmit && type.type.errors}">
-                                    <option value="">select any type</option>
-                                    <option value="car">Car</option>
-                                    <option value="bike">Bike</option>
-                                </select>
-                                <div *ngIf="typesubmit && type.type.errors" class="invalid-feedback">
-                                    <span *ngIf="type.type.errors.required"> Type is required.</span>
+                                <!--Type -->
+                                <div class="form-group mb-2 col-6">
+                                    <label>Type </label>
+                                    <select class="form-select" formControlName="type" placeholder="select any type"
+                                        [ngClass]="{'is-invalid': typesubmit && type.type.errors}">
+                                        <option value="">select any type</option>
+                                        <option value="car">Car</option>
+                                        <option value="bike">Bike</option>
+                                    </select>
+                                    <div *ngIf="typesubmit && type.type.errors" class="invalid-feedback">
+                                        <span *ngIf="type.type.errors.required"> Type is required.</span>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 col-md-12 mb-0 mt-3">
                                 <div>
-                                    <button type="reset" class="btn btn-secondary float-end">
-                                        Reset
-                                    </button>
-                                    <button type="submit" class="btn btn-primary  float-end me-1">
+                                    <button type="reset" class="btn btn-primary float-end">
                                         Submit
+                                    </button>
+                                    <button type="submit" class="btn btn-secondary  float-end me-1">
+                                        Reset
                                     </button>
                                 </div>
                             </div>

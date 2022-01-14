@@ -86,62 +86,55 @@
                 <div class="card">
                     <div class="card-body">
                         <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
-                            <!-- Name -->
-                            <div class="form-group mb-2">
-                                <label>Select Rider</label>
-                                <select class="form-control" formControlName="name"
-                                    [ngClass]="{'is-invalid': typesubmit && type.name.errors}">
-                                    <option *ngFor="let riders of ridersData" [value]="riders.user_id">{{riders.name}}
-                                    </option>
-                                </select>
-                                <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
-                                    <span *ngIf="type.name.errors.required"> Rider Name is required.</span>
+                            <div class="row">
+                                <!-- Name -->
+                                <div class="form-group mb-2 col-6">
+                                    <label>Select Rider</label>
+                                    <select class="form-control" formControlName="name" [ngClass]="{'is-invalid': typesubmit && type.name.errors}">
+                                        <option *ngFor="let riders of ridersData" [value]="riders.user_id">{{riders.name}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
+                                        <span *ngIf="type.name.errors.required"> Rider Name is required.</span>
+                                    </div>
+                                
                                 </div>
-
-                            </div>
-                            <!--Plate -->
-                            <div class="form-group mb-2">
-                                <label>Select Number</label>
-                                <select class="form-control" formControlName="number"
-                                    [ngClass]="{'is-invalid': typesubmit && type.number.errors}">
-                                    <option *ngFor="let sim of simData" [value]="sim.id">{{sim.number}}</option>
-                                </select>
-                                <div *ngIf="typesubmit && type.number.errors" class="invalid-feedback">
-
-                                    <span *ngIf="type.number.errors.required"> Number is required.</span>
-
+                                <!--Plate -->
+                                <div class="form-group mb-2 col-6">
+                                    <label>Select Number</label>
+                                    <select class="form-control" formControlName="number" [ngClass]="{'is-invalid': typesubmit && type.number.errors}">
+                                        <option *ngFor="let sim of simData" [value]="sim.id">{{sim.number}}</option>
+                                    </select>
+                                    <div *ngIf="typesubmit && type.number.errors" class="invalid-feedback">
+                                
+                                        <span *ngIf="type.number.errors.required"> Number is required.</span>
+                                
+                                    </div>
+                                
                                 </div>
-
                             </div>
-                            <!--KM -->
-                            <!-- <div class="form-group mb-2">
-                    <label>KM</label>
-                    <input type="text" class="form-control" formControlName="km"
-                      [ngClass]="{'is-invalid': typesubmit && type.km.errors}"/>
-                    <div *ngIf="typesubmit && type.km.errors" class="invalid-feedback">
-                      <span *ngIf="type.km.errors.required"> Kilo Meter is required.</span>
-                    </div>
-                  </div> -->
-                            <!--EVENT DATE TIME -->
-                            <div class="form-group mb-2">
-                                <label>Event Date and Time</label>
-                                <input type="datetime-local" value="2019-08-19T13:45:00" class="form-control"
-                                    formControlName="event_date_time"
-                                    [ngClass]="{'is-invalid': typesubmit && type.event_date_time.errors}" />
-                                <div *ngIf="typesubmit && type.event_date_time.errors" class="invalid-feedback">
-                                    <span *ngIf="type.event_date_time.errors.required"> Event Date Time is
-                                        required.</span>
+                            
+                            <div class="row">
+                                <!--EVENT DATE TIME -->
+                                <div class="form-group mb-2 col-6">
+                                    <label>Event Date and Time</label>
+                                    <input type="datetime-local" value="2019-08-19T13:45:00" class="form-control" formControlName="event_date_time"
+                                        [ngClass]="{'is-invalid': typesubmit && type.event_date_time.errors}" />
+                                    <div *ngIf="typesubmit && type.event_date_time.errors" class="invalid-feedback">
+                                        <span *ngIf="type.event_date_time.errors.required"> Event Date Time is
+                                            required.</span>
+                                    </div>
                                 </div>
                             </div>
 
 
                             <div class="form-group mb-2 col-md-12 mb-0 mt-3">
                                 <div>
-                                    <button type="reset" class="btn btn-secondary float-end">
-                                        Reset
-                                    </button>
-                                    <button type="submit" class="btn btn-primary  float-end me-1">
+                                    <button type="submit" class="btn btn-primary float-end">
                                         Submit
+                                    </button>
+                                    <button type="reset" class="btn btn-secondary float-end me-1">
+                                        Reset
                                     </button>
                                 </div>
                             </div>

@@ -108,7 +108,7 @@ export class TransactionCategoriesComponent implements OnInit {
     this.initForm();
     this.typeValidationForm.reset();
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "sm",
       windowClass: "modal-holder",
       centered: true,
     });
@@ -123,7 +123,7 @@ export class TransactionCategoriesComponent implements OnInit {
       id: item.id,
     });
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "sm",
       windowClass: "modal-holder",
       centered: true,
     });

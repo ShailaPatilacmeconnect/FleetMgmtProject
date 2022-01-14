@@ -153,7 +153,7 @@ export class UserTransactionsComponent implements OnInit {
     this.initForm();
     this.typeValidationForm.reset();
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });
@@ -208,7 +208,7 @@ export class UserTransactionsComponent implements OnInit {
 
   import() {
     this.modalService.open(ImportComponent, {
-      size: "sx",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });
@@ -249,7 +249,7 @@ export class UserTransactionsComponent implements OnInit {
     // this.showImage=!this.showImage
     this.editModals(item);
     this.modalService.open(largeDataModal, {
-      size: "lg",
+      size: "xs",
       windowClass: "modal-holder",
       centered: true,
     });

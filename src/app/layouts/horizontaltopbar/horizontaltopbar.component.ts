@@ -1,52 +1,57 @@
-import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { LanguageService } from '../../core/services/language.service';
+import { Component, OnInit, AfterViewInit, Inject } from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
+import { LanguageService } from "../../core/services/language.service";
 
-import { EventService } from '../../core/services/event.service';
-import { AuthenticationService } from '../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../core/services/authfake.service';
+import { EventService } from "../../core/services/event.service";
+import { AuthenticationService } from "../../core/services/auth.service";
+import { AuthfakeauthenticationService } from "../../core/services/authfake.service";
 
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT } from "@angular/common";
 
-import { MENU } from './menu';
-import { MenuItem } from './menu.model';
-import { environment } from '../../../environments/environment';
+import { MENU } from "./menu";
+import { MenuItem } from "./menu.model";
+import { environment } from "../../../environments/environment";
 
 @Component({
-  selector: 'app-horizontaltopbar',
-  templateUrl: './horizontaltopbar.component.html',
-  styleUrls: ['./horizontaltopbar.component.scss']
+  selector: "app-horizontaltopbar",
+  templateUrl: "./horizontaltopbar.component.html",
+  styleUrls: ["./horizontaltopbar.component.scss"],
 })
 
 /**
  * Horizontal Topbar and navbar specified
  */
 export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
-
   element;
   cookieValue;
   flagvalue;
   countryName;
   valueset;
+  currentUser: any;
 
   menuItems = [];
 
   listLang = [
-    { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
-    { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
-    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
-    { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
-    { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
+    { text: "English", flag: "assets/images/flags/us.jpg", lang: "en" },
+    { text: "Spanish", flag: "assets/images/flags/spain.jpg", lang: "es" },
+    { text: "German", flag: "assets/images/flags/germany.jpg", lang: "de" },
+    { text: "Italian", flag: "assets/images/flags/italy.jpg", lang: "it" },
+    { text: "Russian", flag: "assets/images/flags/russia.jpg", lang: "ru" },
   ];
 
   // tslint:disable-next-line: max-line-length
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private eventService: EventService, private authService: AuthenticationService,
+  constructor(
+    @Inject(DOCUMENT) private document: any,
+    private router: Router,
+    private eventService: EventService,
+    private authService: AuthenticationService,
     private authFackservice: AuthfakeauthenticationService,
     public languageService: LanguageService,
     // tslint:disable-next-line: variable-name
-    public _cookiesService: CookieService) {
-    router.events.subscribe(event => {
+    public _cookiesService: CookieService
+  ) {
+    router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.activateMenu();
       }
@@ -54,17 +59,21 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authFackservice.currentUserValue;
+
     this.element = document.documentElement;
 
     this.initialize();
 
-    this.cookieValue = this._cookiesService.get('lang');
-    const val = this.listLang.filter(x => x.lang === this.cookieValue);
-    this.countryName = val.map(element => element.text);
+    this.cookieValue = this._cookiesService.get("lang");
+    const val = this.listLang.filter((x) => x.lang === this.cookieValue);
+    this.countryName = val.map((element) => element.text);
     if (val.length === 0) {
-      if (this.flagvalue === undefined) { this.valueset = 'assets/images/flags/us.jpg'; }
+      if (this.flagvalue === undefined) {
+        this.valueset = "assets/images/flags/us.jpg";
+      }
     } else {
-      this.flagvalue = val.map(element => element.flag);
+      this.flagvalue = val.map((element) => element.flag);
     }
   }
 
@@ -79,12 +88,12 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
    * Logout the user
    */
   logout() {
-    if (environment.defaultauth === 'firebase') {
+    if (environment.defaultauth === "firebase") {
       this.authService.logout();
     } else {
       this.authFackservice.logout();
     }
-    this.router.navigate(['/account/login']);
+    this.router.navigate(["/account/login"]);
   }
 
   /**
@@ -120,36 +129,37 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
    * Togglemenu bar
    */
   toggleMenubar() {
-    const element = document.getElementById('topnav-menu-content');
-    element.classList.toggle('show');
+    const element = document.getElementById("topnav-menu-content");
+    element.classList.toggle("show");
   }
 
   /**
    * Activates the menu
    */
   private activateMenu() {
-
     const resetParent = (el: any) => {
       const parent = el.parentElement;
       if (parent) {
-        parent.classList.remove('active');
+        parent.classList.remove("active");
         const parent2 = parent.parentElement;
-        this._removeAllClass('mm-active');
-        this._removeAllClass('mm-show');
+        this._removeAllClass("mm-active");
+        this._removeAllClass("mm-show");
         if (parent2) {
-          parent2.classList.remove('active');
+          parent2.classList.remove("active");
           const parent3 = parent2.parentElement;
           if (parent3) {
-            parent3.classList.remove('active');
+            parent3.classList.remove("active");
             const parent4 = parent3.parentElement;
             if (parent4) {
-              parent4.classList.remove('active');
+              parent4.classList.remove("active");
               const parent5 = parent4.parentElement;
               if (parent5) {
-                parent5.classList.remove('active');
-                const menuelement = document.getElementById("topnav-menu-content")
+                parent5.classList.remove("active");
+                const menuelement = document.getElementById(
+                  "topnav-menu-content"
+                );
                 if (menuelement !== null) {
-                  if (menuelement.classList.contains('show'))
+                  if (menuelement.classList.contains("show"))
                     document
                       .getElementById("topnav-menu-content")
                       .classList.remove("show");
@@ -162,7 +172,7 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
     };
 
     // activate menu item based on location
-    const links = document.getElementsByClassName('side-nav-link-ref');
+    const links = document.getElementsByClassName("side-nav-link-ref");
     let matchingMenuItem = null;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < links.length; i++) {
@@ -172,7 +182,7 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < links.length; i++) {
       // tslint:disable-next-line: no-string-literal
-      if (location.pathname === links[i]['pathname']) {
+      if (location.pathname === links[i]["pathname"]) {
         matchingMenuItem = links[i];
         break;
       }
@@ -185,22 +195,22 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
        * We should come up with non hard coded approach
        */
       if (parent) {
-        parent.classList.add('active');
+        parent.classList.add("active");
         const parent2 = parent.parentElement;
         if (parent2) {
-          parent2.classList.add('active');
+          parent2.classList.add("active");
           const parent3 = parent2.parentElement;
           if (parent3) {
-            parent3.classList.add('active');
+            parent3.classList.add("active");
             const parent4 = parent3.parentElement;
             if (parent4) {
-              parent4.classList.add('active');
+              parent4.classList.add("active");
               const parent5 = parent4.parentElement;
               if (parent5) {
-                parent5.classList.add('active');
+                parent5.classList.add("active");
                 const parent6 = parent5.parentElement;
                 if (parent6) {
-                  parent6.classList.add('active');
+                  parent6.classList.add("active");
                 }
               }
             }
@@ -214,17 +224,19 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
    * on settings button clicked from topbar
    */
   onSettingsButtonClicked() {
-    document.body.classList.toggle('right-bar-enabled');
+    document.body.classList.toggle("right-bar-enabled");
   }
 
   /**
    * Fullscreen method
    */
   fullscreen() {
-    document.body.classList.toggle('fullscreen-enable');
+    document.body.classList.toggle("fullscreen-enable");
     if (
-      !document.fullscreenElement && !this.element.mozFullScreenElement &&
-      !this.element.webkitFullscreenElement) {
+      !document.fullscreenElement &&
+      !this.element.mozFullScreenElement &&
+      !this.element.webkitFullscreenElement
+    ) {
       if (this.element.requestFullscreen) {
         this.element.requestFullscreen();
       } else if (this.element.mozRequestFullScreen) {
@@ -267,5 +279,4 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
   hasItems(item: MenuItem) {
     return item.subItems !== undefined ? item.subItems.length > 0 : false;
   }
-
 }

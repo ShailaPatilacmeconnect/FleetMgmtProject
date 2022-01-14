@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: "transactionCategory", component: TransactionCategoriesComponent },
   { path: "bikes", component: BikesComponent },
   { path: "cars", component: CarsComponent },
-  { path: "userTransactions", component: UserTransactionsComponent },
+  { path: "transactions", component: UserTransactionsComponent },
   { path: "loans", component: LoansComponent },
   { path: "makers", component: MakersComponent },
   { path: "mobileSim", component: MobileSimComponent },

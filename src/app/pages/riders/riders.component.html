@@ -14,17 +14,21 @@
                                     (keyup)="search()" />
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-2 mt-4">
+                            <div>
+                                <button type="button" class="btn btn-secondary w-75 " (click)="export('csv')">
+                                    CSV
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group mb-2 col-md-12">
                                 <label style="visibility: hidden;">report</label>
                                 <div>
                                     <div class="text-sm-end">
-                                        <button type="button" class="btn btn-primary mb-2 me-2" (click)="export('csv')">
-                                            <i class="mdi mdi-plus me-1"></i> Export
-                                        </button>
-                                        <input hidden type="file" #uploader (change)="onFileSelected($event)" />
-                                        <button class="btn btn-primary mb-2 me-2" (click)="uploader.click()">
-                                            <i class="mdi mdi-plus me-1"></i>Import
+                                        
+                                        <button type="button" class="btn btn-primary mb-2 me-2" (click)="import()">
+                                            Import
                                         </button>
                                         <button type="button" class="btn btn-primary mb-2 me-2"
                                             (click)="largeModal(largeDataModal)">
@@ -41,6 +45,9 @@
                             <thead>
                                 <tr>
                                     <th sortable="name" (sort)="onSort($event)">Name</th>
+                                    <th sortable="email" (sort)="onSort($event)">Email</th>
+                                    <th sortable="phone" (sort)="onSort($event)">Phone</th>
+                                    <th sortable="vehicle" (sort)="onSort($event)">Vehicle</th>
                                     <th sortable="status" (sort)="onSort($event)" class=" text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -48,6 +55,9 @@
                             <tbody>
                                 <tr *ngFor="let ridersInfo of riderData ">
                                     <td>{{ridersInfo.name}}</td>
+                                    <td>{{ridersInfo.email}}</td>
+                                    <td>{{ridersInfo.phone}}</td>
+                                    <td>{{ridersInfo.vehicle}}</td>
                                     <td>
                                         <div class="form-check form-switch  mb-2 d-flex justify-content-center text-center" dir="ltr">
                                             <input type="checkbox" class="form-check-input"
@@ -68,7 +78,25 @@
                                                     <i class="fas fa-trash-alt text-danger me-2"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-4">
+                                                <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                                                    <div class="btn-group" role="group" ngbDropdown>
+                                                        <button id="btnGroupVerticalDrop1" ngbDropdownToggle type="button" class="btn btn-secondary dropdown-toggle"
+                                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Dropdown <i class="mdi mdi-chevron-down"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="btnGroupVerticalDrop1">
+                                                            <a class="dropdown-item" (click)="getRiderLoans(ridersInfo.user_id)">Loans</a>
+                                                            <a class="dropdown-item" (click)="getRiderRecurringPayments(ridersInfo.user_id)">Recurring Payments</a>
+                                                            <a class="dropdown-item" (click)="getCarHistory(ridersInfo.user_id)">Car History</a>
+                                                            <a class="dropdown-item" (click)="getBikeHistory(ridersInfo.user_id)">Bike History</a>
+                                                            <a class="dropdown-item" (click)="getSimHistory(ridersInfo.user_id)">Sim History</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- <div class="col-1">
                                                 <button type="button" class="btn btn-primary mb-2 me-2" (click)="getRiderLoans(ridersInfo.user_id)">
                                                     <i class="fas fa-money-check-alt"></i>
                                                 </button>
@@ -92,35 +120,9 @@
                                                 <button type="button" class="btn btn-primary mb-2 me-2" (click)="getSimHistory(ridersInfo.user_id)">
                                                     <i class="fas fa-sim-card"></i>
                                                 </button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </td>
-                                    <!-- <td class="text-center">
-                                        <div placement="bottom-end">
-                                            <a href="javascript: void(0);"
-                                                (click)="editModal(largeDataModal,ridersInfo)"><i
-                                                    class="fas fa-pencil-alt text-success me-2"></i>
-                                            </a>
-                                            <a href="javascript: void(0);" (click)="deleteRow(ridersInfo)"><i class="fas fa-times text-success me-2"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-primary mb-2 me-2"
-                                            (click)="getRiderLoans(ridersInfo.user_id)">
-                                                <i class="fas fa-money-check-alt"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-primary mb-2 me-2" (click)="getRiderRecurringPayments(ridersInfo.user_id)">
-                                                <i class="far fa-credit-card"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-primary mb-2 me-2" (click)="getCarHistory(ridersInfo.user_id)">
-                                                <i class="fas fa-car"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-primary mb-2 me-2" (click)="getBikeHistory(ridersInfo.user_id)">
-                                                <i class="fas fa-motorcycle"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-primary mb-2 me-2" (click)="getSimHistory(ridersInfo.user_id)">
-                                                <i class="fas fa-sim-card"></i>
-                                            </button>
-                                        </div>
-                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -148,73 +150,82 @@
                 <div class="card">
                     <div class="card-body">
                         <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
-                            <div class="form-group mb-2">
-                                <label>Name</label>
-                                <input type="text" class="form-control" formControlName="name"
-                                    [ngClass]="{'is-invalid': typesubmit && type.name.errors}" />
-                                <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
-                                    <span *ngIf="type.name.errors.required"> Name is required.</span>
+                            <div class="row">
+                                <div class="form-group mb-2 col-6">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" formControlName="name"
+                                        [ngClass]="{'is-invalid': typesubmit && type.name.errors}" />
+                                    <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
+                                        <span *ngIf="type.name.errors.required"> Name is required.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 col-6">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" formControlName="email"
+                                        [ngClass]="{'is-invalid': typesubmit && type.email.errors}" />
+                                    <div *ngIf="typesubmit && type.email.errors" class="invalid-feedback">
+                                        <span *ngIf="type.email.errors.required"> Email is required.</span>
+                                        <span *ngIf="type.email.errors.pattern">Email should be a valid email.</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group mb-2">
-                                <label>Email</label>
-                                <input type="text" class="form-control" formControlName="email"
-                                    [ngClass]="{'is-invalid': typesubmit && type.email.errors}" />
-                                <div *ngIf="typesubmit && type.email.errors" class="invalid-feedback">
-                                    <span *ngIf="type.email.errors.required"> Email is required.</span>
-                                    <span *ngIf="type.email.errors.pattern">Email should be a valid email.</span>
+                            <div class="row">
+                                <div class="form-group mb-2 col-6">
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control" formControlName="phone"
+                                        [ngClass]="{'is-invalid': typesubmit && type.phone.errors}" />
+                                    <div *ngIf="typesubmit && type.phone.errors" class="invalid-feedback">
+                                        <span *ngIf="type.phone.errors.required">phone number is required.</span>
+                                        <span *ngIf="type.phone.errors.pattern">phone number should be a valid one.</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group mb-2">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" formControlName="phone"
-                                    [ngClass]="{'is-invalid': typesubmit && type.phone.errors}" />
-                                <div *ngIf="typesubmit && type.phone.errors" class="invalid-feedback">
-                                    <span *ngIf="type.phone.errors.required">phone number is required.</span>
-                                    <span *ngIf="type.phone.errors.pattern">phone number should be a valid one.</span>
-                                </div>
-                            </div>
-                            <div class="form-group mb-2">
-                                <label>Vehical</label>
-                                    <select class="form-select" name="vehicle" formControlName="vehicle" [ngClass]="{'is-invalid': typesubmit && type.vehicle.errors}">
+                                <div class="form-group mb-2 col-6">
+                                    <label>Vehical</label>
+                                    <select class="form-select" name="vehicle" formControlName="vehicle"
+                                        [ngClass]="{'is-invalid': typesubmit && type.vehicle.errors}">
                                         <option value="car">Car</option>
                                         <option value="bike">Bike</option>
                                     </select>
                                     <div *ngIf="typesubmit && type.vehicle.errors" class="invalid-feedback">
                                         <span *ngIf="type.vehicle.errors.required"> Select Vehical</span>
                                     </div>
-                            </div>
-                            <div class="form-group mb-2">
-                                <label>Company1</label>
-                                <input type="text" class="form-control" formControlName="company_id1"
-                                    [ngClass]="{'is-invalid': typesubmit && type.company_id1.errors}" />
-                                <div *ngIf="typesubmit && type.company_id1.errors" class="invalid-feedback">
-                                    <span *ngIf="type.company_id1.errors.required"> Company1 is required.</span>
                                 </div>
                             </div>
-                            <div class="form-group mb-2">
-                                <label>Company2</label>
-                                <input type="text" class="form-control" formControlName="company_id2"
-                                    [ngClass]="{'is-invalid': typesubmit && type.company_id2.errors}" />
-                                <div *ngIf="typesubmit && type.company_id2.errors" class="invalid-feedback">
-                                    <span *ngIf="type.company_id2.errors.required"> Company2 is required.</span>
+                            <div class="row">
+                                    <div class="form-group mb-2 col-6">
+                                        <label>Company 1</label>
+                                        <input type="text" class="form-control" formControlName="company_id1"
+                                            [ngClass]="{'is-invalid': typesubmit && type.company_id1.errors}" />
+                                        <div *ngIf="typesubmit && type.company_id1.errors" class="invalid-feedback">
+                                            <span *ngIf="type.company_id1.errors.required"> Company 1 is required.</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-2 col-6">
+                                        <label>Company 2</label>
+                                        <input type="text" class="form-control" formControlName="company_id2"
+                                            [ngClass]="{'is-invalid': typesubmit && type.company_id2.errors}" />
+                                        <div *ngIf="typesubmit && type.company_id2.errors" class="invalid-feedback">
+                                            <span *ngIf="type.company_id2.errors.required"> Company 2 is required.</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group mb-2">
-                                <label>Company3</label>
-                                <input type="text" class="form-control" formControlName="company_id3"
-                                    [ngClass]="{'is-invalid': typesubmit && type.company_id3.errors}" />
-                                <div *ngIf="typesubmit && type.company_id3.errors" class="invalid-feedback">
-                                    <span *ngIf="type.company_id3.errors.required"> Company3 is required.</span>
+                                <div class="row">
+                                    <div class="form-group mb-2 col-6">
+                                        <label>Company 3</label>
+                                        <input type="text" class="form-control" formControlName="company_id3"
+                                            [ngClass]="{'is-invalid': typesubmit && type.company_id3.errors}" />
+                                        <div *ngIf="typesubmit && type.company_id3.errors" class="invalid-feedback">
+                                            <span *ngIf="type.company_id3.errors.required"> Company 3 is required.</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
                             <div class="form-group mb-2 col-md-12 mb-0 mt-3">
                                 <div>
-                                    <button type="reset" class="btn btn-secondary float-end">
-                                        Reset
-                                    </button>
-                                    <button type="submit" class="btn btn-primary  float-end me-1">
+                                    <button type="submit" class="btn btn-primary  float-end ">
                                         Submit
+                                    </button>
+                                    <button type="reset" class="btn btn-secondary float-end me-1">
+                                        Reset
                                     </button>
                                 </div>
                             </div>

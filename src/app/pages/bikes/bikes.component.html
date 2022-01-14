@@ -14,17 +14,20 @@
                                     (keyup)="search()" />
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-2 mt-4">
+                            <div>
+                                <button type="button" class="btn btn-secondary w-75 " (click)="export('csv')">
+                                    CSV
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group mb-2 col-md-12">
                                 <label style="visibility: hidden;">report</label>
                                 <div>
                                     <div class="text-sm-end">
-                                        <button type="button" class="btn btn-primary mb-2 me-2" (click)="export('csv')">
-                                            <i class="mdi mdi-plus me-1"></i> Export
-                                        </button>
-                                        <input hidden type="file" #uploader (change)="onFileSelected($event)" />
-                                        <button class="btn btn-primary mb-2 me-2" (click)="uploader.click()">
-                                            <i class="mdi mdi-plus me-1"></i>Import
+                                        <button type="button" class="btn btn-primary mb-2 me-2" (click)="import()">
+                                            Import
                                         </button>
                                         <button type="button" class="btn btn-primary mb-2 me-2"
                                             (click)="largeModal(largeDataModal)">
@@ -41,6 +44,10 @@
                             <thead>
                                 <tr>
                                     <th sortable="name" (sort)="onSort($event)">Bike Id</th>
+                                    <th sortable="vim" (sort)="onSort($event)">Vim</th>
+                                    <th sortable="plate" (sort)="onSort($event)">Plate</th>
+                                    <th sortable="purchase_date" (sort)="onSort($event)">Purchase_Date</th>
+                                    <th sortable="maker_id" (sort)="onSort($event)">maker_Id</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -48,6 +55,10 @@
                             <tbody>
                                 <tr *ngFor="let bikeInfo of bikesData ">
                                     <td>{{bikeInfo.bike_id}}</td>
+                                    <td>{{bikeInfo.vim}}</td>
+                                    <td>{{bikeInfo.plate}}</td>
+                                    <td>{{bikeInfo.purchase_date}}</td>
+                                    <td>{{bikeInfo.make}}</td>
                                     <td>
                                         <div class="form-check form-switch  mb-2 d-flex justify-content-center text-center" dir="ltr">
                                             <input type="checkbox" class="form-check-input"
@@ -97,55 +108,61 @@
                 <div class="card">
                     <div class="card-body">
                         <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
-                            <div class="form-group mb-2">
-                                <label>Bike Id</label>
-                                <input type="text" class="form-control" formControlName="bike_id"
-                                    [ngClass]="{'is-invalid': typesubmit && type.bike_id.errors}" />
-                                <div *ngIf="typesubmit && type.bike_id.errors" class="invalid-feedback">
-                                    <span *ngIf="type.bike_id.errors.required"> Bike Id is required.</span>
+                            <div class="row">
+                                <div class="form-group mb-2 col-6">
+                                    <label>Bike Id</label>
+                                    <input type="text" class="form-control" formControlName="bike_id"
+                                        [ngClass]="{'is-invalid': typesubmit && type.bike_id.errors}" />
+                                    <div *ngIf="typesubmit && type.bike_id.errors" class="invalid-feedback">
+                                        <span *ngIf="type.bike_id.errors.required"> Bike Id is required.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 col-6">
+                                    <label>Vim</label>
+                                    <input type="text" class="form-control" formControlName="vim"
+                                        [ngClass]="{'is-invalid': typesubmit && type.vim.errors}" />
+                                    <div *ngIf="typesubmit && type.vim.errors" class="invalid-feedback">
+                                        <span *ngIf="type.vim.errors.required"> Vim is required.</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group mb-2">
-                                <label>Vim</label>
-                                <input type="text" class="form-control" formControlName="vim"
-                                    [ngClass]="{'is-invalid': typesubmit && type.vim.errors}" />
-                                <div *ngIf="typesubmit && type.vim.errors" class="invalid-feedback">
-                                    <span *ngIf="type.vim.errors.required"> Vim is required.</span>
+                            <div class="row">
+                                <div class="form-group mb-2 col-6">
+                                    <label>Plate</label>
+                                    <input type="text" class="form-control" formControlName="plate"
+                                        [ngClass]="{'is-invalid': typesubmit && type.plate.errors}" />
+                                    <div *ngIf="typesubmit && type.plate.errors" class="invalid-feedback">
+                                        <span *ngIf="type.plate.errors.required"> Plate is required.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 col-6">
+                                    <label>Purchase Date</label>
+                                    <input type="date" class="form-control" formControlName="purchase_date"
+                                        [ngClass]="{'is-invalid': typesubmit && type.purchase_date.errors}" />
+                                    <div *ngIf="typesubmit && type.purchase_date.errors" class="invalid-feedback">
+                                        <span *ngIf="type.purchase_date.errors.required"> Purchase Date is required.</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group mb-2">
-                                <label>Plate</label>
-                                <input type="text" class="form-control" formControlName="plate"
-                                    [ngClass]="{'is-invalid': typesubmit && type.plate.errors}" />
-                                <div *ngIf="typesubmit && type.plate.errors" class="invalid-feedback">
-                                    <span *ngIf="type.plate.errors.required"> Plate is required.</span>
-                                </div>
-                            </div>
-                            <div class="form-group mb-2">
-                                <label>Purchase Date</label>
-                                <input type="date" class="form-control" formControlName="purchase_date"
-                                    [ngClass]="{'is-invalid': typesubmit && type.purchase_date.errors}" />
-                                <div *ngIf="typesubmit && type.purchase_date.errors" class="invalid-feedback">
-                                    <span *ngIf="type.purchase_date.errors.required"> Purchase Date is required.</span>
-                                </div>
-                            </div>
-                            <div class="form-group mb-2">
-                                <label>Maker</label>
-                                <select class="form-select" name="maker_id" formControlName="maker_id"
-                                    [ngClass]="{'is-invalid': typesubmit && type.maker_id.errors}">
-                                    <option *ngFor="let makersdata of makerData" value="{{makersdata.id}}">{{makersdata.name}}</option>
-                                </select>
-                                <div *ngIf="typesubmit && type.maker_id.errors" class="invalid-feedback">
-                                    <span *ngIf="type.maker_id.errors.required"> Select Maker</span>
+                            <div class="row">
+                                <div class="form-group mb-2 col-6">
+                                    <label>Maker</label>
+                                    <select class="form-select" name="maker_id" formControlName="maker_id"
+                                        [ngClass]="{'is-invalid': typesubmit && type.maker_id.errors}">
+                                        <option *ngFor="let makersdata of makerData" value="{{makersdata.id}}">{{makersdata.name}}</option>
+                                    </select>
+                                    <div *ngIf="typesubmit && type.maker_id.errors" class="invalid-feedback">
+                                        <span *ngIf="type.maker_id.errors.required"> Select Maker</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group mb-2 col-md-12 mb-0 mt-3">
                                 <div>
-                                    <button type="reset" class="btn btn-secondary float-end">
-                                        Reset
-                                    </button>
-                                    <button type="submit" class="btn btn-primary  float-end me-1">
+                                    <button type="submit" class="btn btn-primary  float-end">
                                         Submit
+                                    </button>
+                                    <button type="reset" class="btn btn-secondary float-end me-1">
+                                        Reset
                                     </button>
                                 </div>
                             </div>
