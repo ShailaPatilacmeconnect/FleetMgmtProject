@@ -125,7 +125,7 @@ export class ManageRecurringPaymentsComponent implements OnInit {
       id:item.id
     });
     this.modalService.open(largeDataModal,
-       { size: 'lg',windowClass:'modal-holder',
+       { size: 'sm',windowClass:'modal-holder',
         centered: true });
   }
   toggleFunction(event,id){
