@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
 import { notificationService } from "src/app/core/services/notofication.service";
@@ -38,6 +38,7 @@ export class RiderSimHistoryComponent implements OnInit {
   simData: any = [];
   sortBy = "";
   order = "";
+  riderId="";
   keyword: string = "";
   // title='Add';
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader> =
@@ -46,6 +47,7 @@ export class RiderSimHistoryComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     public notificationService: notificationService,
+    private activeRoute: ActivatedRoute,
     private authFackservice: AuthfakeauthenticationService,
     public formBuilder: FormBuilder
   ) {}
@@ -55,6 +57,10 @@ export class RiderSimHistoryComponent implements OnInit {
       { label: "My Dashboard", href: "/dashboard" },
       { label: "Assign SIM", active: true },
     ];
+    this.activeRoute.params.subscribe(params=>{
+      console.log('The id of this route is: ', params.user_id);
+      this.riderId=params.user_id;
+    });
     this._fetchData();
   }
 
@@ -76,7 +82,7 @@ export class RiderSimHistoryComponent implements OnInit {
   public _fetchData() {
     this.authFackservice
       .get(
-        "/admin/riders/simHistory?page=" +
+        "/admin/riders/simHistory?user_id="+this.riderId+"&page=" +
           this.page.pageNumber +
           "&perPage=10&keyword=" +
           this.keyword
@@ -137,7 +143,7 @@ export class RiderSimHistoryComponent implements OnInit {
     this.typesubmit = true;
     if (this.typeValidationForm.status == "INVALID") return;
     var formData: any = new FormData();
-    formData.append("user_id", this.typeValidationForm.value.name);
+    formData.append("user_id", this.riderId);
     formData.append("sim_id", this.typeValidationForm.value.number);
     formData.append(
       "event_date_time",

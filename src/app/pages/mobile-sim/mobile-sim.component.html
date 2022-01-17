@@ -103,23 +103,24 @@
                                         <span *ngIf="type.serial_number.errors.required"> serial number is required</span>
                                         <span *ngIf="type.serial_number.errors.maxlength">This value length is invalid. It
                                             should
-                                            be 16 characters long.</span>
+                                            be 16 digit long.</span>
                                         <span *ngIf="type.serial_number.errors.minlength">This value length is invalid. It
                                             should
-                                            be 16 characters long.</span>
+                                            be 16 digit long.</span>
                                     </div>
                                 </div>
                                 
                                 <!--Number -->
                                 <div class="form-group mb-2 col-6">
                                     <label> Number</label>
-                                    <input type="number" placeholder="Number should be min 9 and max 13 digit long" class="form-control"
-                                        formControlName="number" minlength="9" maxlength="13"
+                                    <input type="text" placeholder="Number should be min 9 and max 13 digit long" class="form-control"
+                                        formControlName="number"
                                         [ngClass]="{'is-invalid': typesubmit && type.number.errors}" />
                                 
                                     <div *ngIf="typesubmit && type.number.errors" class="invalid-feedback">
                                         <span *ngIf="type.number.errors.required"> Number is required.</span>
-                                
+                                        <span *ngIf="type.number.errors.pattern">Invalid mobile number</span>
+                                                                                                        
                                     </div>
                                 </div>
 

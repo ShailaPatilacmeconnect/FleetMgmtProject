@@ -13,6 +13,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
             this.authenticationService.setApiLoaderStatus();
+            // console.log(err.error.data.details[0]['message'])
+
             if (err.status === 401 ||err.status==403) {
                 // auto logout if 401 response returned from api
                 console.log( err)
@@ -21,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
             if (err.status === 400 || err.status === 422) {
                 if( err.error.data)
-                Swal.fire('Error',  err.error.data, 'warning');
+                Swal.fire(err.error.data.details[0]['message'],  err.error.data, 'warning');
                 else{
                     Swal.fire('Error', 'Invalid Input', 'warning');
                 }

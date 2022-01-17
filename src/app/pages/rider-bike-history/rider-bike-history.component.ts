@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
 import { notificationService } from "src/app/core/services/notofication.service";
@@ -38,6 +38,7 @@ export class RiderBikeHistoryComponent implements OnInit {
   bikesData: any = [];
   sortBy = "";
   order = "";
+  riderId="";
   keyword: string = "";
   // title='Add';
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader> =
@@ -46,6 +47,7 @@ export class RiderBikeHistoryComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     public notificationService: notificationService,
+    private activeRoute: ActivatedRoute,
     private authFackservice: AuthfakeauthenticationService,
     public formBuilder: FormBuilder
   ) {}
@@ -55,13 +57,17 @@ export class RiderBikeHistoryComponent implements OnInit {
       { label: "My Dashboard", href: "/dashboard" },
       { label: "Assign Bike", active: true },
     ];
+    this.activeRoute.params.subscribe(params=>{
+      console.log('The id of this route is: ', params.user_id);
+      this.riderId=params.user_id;
+    });
     this._fetchData();
   }
 
   initForm() {
     this.typeValidationForm = this.formBuilder.group({
       id: 0,
-      name: ["", [Validators.required]],
+      name: [""],
       plate: ["", [Validators.required]],
       km: ["", [Validators.required]],
       event_date_time: ["", [Validators.required]],
@@ -75,7 +81,7 @@ export class RiderBikeHistoryComponent implements OnInit {
   public _fetchData() {
     this.authFackservice
       .get(
-        "admin/rideHistory/bike?page=" +
+        "admin/rideHistory/bike?user_id="+this.riderId+"&page=" +
           this.page.pageNumber +
           "&perPage=10&keyword=" +
           this.keyword
@@ -135,7 +141,7 @@ export class RiderBikeHistoryComponent implements OnInit {
     this.typesubmit = true;
     if (this.typeValidationForm.status == "INVALID") return;
     var formData: any = new FormData();
-    formData.append("user_id", this.typeValidationForm.value.name);
+    formData.append("user_id", this.riderId);
     formData.append("bike_id", this.typeValidationForm.value.plate);
     formData.append("km", this.typeValidationForm.value.km);
     formData.append(

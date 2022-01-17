@@ -29,7 +29,7 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive" *ngIf="rideHistoryData.length>0">
+                    <div class="table-responsive" *ngIf="carRideHistoryData.length>0">
                         <table class="table dt-responsive nowrap datatables no-footer dtr-inline">
                             <thead>
                                 <tr>
@@ -43,7 +43,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let rideHistory of rideHistoryData ">
+                                <tr *ngFor="let rideHistory of carRideHistoryData ">
                                     <td>{{rideHistory.rider}}</td>
                                     <td>{{rideHistory.plate}}</td>
                                     <td>{{rideHistory.km}}</td>
@@ -64,9 +64,9 @@
                         </table>
                     </div>
 
-                    <app-pagination [page]="pageCopy()" *ngIf="rideHistoryData.length>0"
+                    <app-pagination [page]="pageCopy()" *ngIf="carRideHistoryData.length>0"
                         (newItemEvent)="changePage($event)"></app-pagination>
-                    <div class="table-responsive text-primary" *ngIf="rideHistoryData.length==0">
+                    <div class="table-responsive text-primary" *ngIf="carRideHistoryData.length==0">
                         * 0 Results Found.
                     </div>
                 </div>
@@ -88,17 +88,23 @@
                         <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
                             <div class="row">
                                 <!-- Name -->
-                                <div class="form-group mb-2 col-6">
-                                    <label>Select Rider</label>
-                                    <select class="form-control" formControlName="name" [ngClass]="{'is-invalid': typesubmit && type.name.errors}">
+                                <!-- <div class="form-group mb-2 col-6">
+                                    <label>Rider Name</label>
+                                    <input type="text" class="form-control" 
+                                      formControlName="name" *ngFor="let rideHistory of carRideHistoryData" [value]="rideHistory.name"
+                                       placeholder="{{rideHistory.rider}}"
+                                    [ngClass]="{'is-invalid': typesubmit && type.name.errors}" readonly /> -->
+                                    <!-- <select class="form-control" formControlName="name" [ngClass]="{'is-invalid': typesubmit && type.name.errors}">
                                         <option *ngFor="let riders of ridersData" [value]="riders.user_id">{{riders.name}}
                                         </option>
-                                    </select>
-                                    <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
+                                    </select> -->
+                                    <!-- <div *ngIf="typesubmit && type.name.errors" class="invalid-feedback">
                                         <span *ngIf="type.name.errors.required"> Rider Name is required.</span>
-                                    </div>
+                                    </div> -->
                                 
-                                </div>
+                                <!-- </div> -->
+                                
+
                                 <!--Plate -->
                                 <div class="form-group mb-2 col-6">
                                     <label>Select Plate</label>
@@ -113,11 +119,8 @@
                                     </div>
                                 
                                 </div>
-                            </div>
-                            
-                            <div class="row">
-                                <!--KM -->
-                                <div class="form-group mb-2 col-6">
+                                 <!--KM -->
+                                 <div class="form-group mb-2 col-6">
                                     <label>KM</label>
                                     <input type="text" class="form-control" formControlName="km"
                                         [ngClass]="{'is-invalid': typesubmit && type.km.errors}" />
@@ -125,6 +128,10 @@
                                         <span *ngIf="type.km.errors.required"> Kilo Meter is required.</span>
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row">
+                               
                                 <!--EVENT DATE TIME -->
                                 <div class="form-group mb-2 col-6">
                                     <label>Event Date and Time</label>

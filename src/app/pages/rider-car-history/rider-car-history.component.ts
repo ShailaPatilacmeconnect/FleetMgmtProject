@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
 import { notificationService } from "src/app/core/services/notofication.service";
@@ -33,11 +33,12 @@ export class RiderCarHistoryComponent implements OnInit {
   typeValidationForm: FormGroup; // type validation form
   typesubmit: boolean = false;
 
-  rideHistoryData: any = [];
+  carRideHistoryData: any = [];
   ridersData: any = [];
   carsData: any = [];
   sortBy = "";
   order = "";
+  riderId="";
   keyword: string = "";
   // title='Add';
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader> =
@@ -47,6 +48,7 @@ export class RiderCarHistoryComponent implements OnInit {
     private modalService: NgbModal,
     public notificationService: notificationService,
     private authFackservice: AuthfakeauthenticationService,
+    private activeRoute: ActivatedRoute,
     public formBuilder: FormBuilder
   ) {}
 
@@ -55,13 +57,19 @@ export class RiderCarHistoryComponent implements OnInit {
       { label: "My Dashboard", href: "/dashboard" },
       { label: "Assign Car", active: true },
     ];
+
+    this.activeRoute.params.subscribe(params => {
+      console.log('The id of this route is: ', params.user_id);
+      this.riderId=params.user_id;
+      
+    });
     this._fetchData();
   }
 
   initForm() {
     this.typeValidationForm = this.formBuilder.group({
       id: 0,
-      name: ["", [Validators.required]],
+      name: [""],
       plate: ["", [Validators.required]],
       km: ["", [Validators.required]],
       event_date_time: ["", [Validators.required]],
@@ -75,15 +83,11 @@ export class RiderCarHistoryComponent implements OnInit {
 
   public _fetchData() {
     this.authFackservice
-      .get(
-        "admin/rideHistory/car?page=" +
-          this.page.pageNumber +
-          "&perPage=10&keyword=" +
-          this.keyword
+      .get("admin/rideHistory/car?user_id="+this.riderId+ "&page=" +this.page.pageNumber +"&perPage=10&keyword=" +this.keyword
       )
       .subscribe((res) => {
         if (res["status"] == true) {
-          this.rideHistoryData = res["data"];
+          this.carRideHistoryData = res["data"];
           this.page.totalElements = res["elementCount"];
         }
       });
@@ -137,13 +141,12 @@ export class RiderCarHistoryComponent implements OnInit {
     this.typesubmit = true;
     if (this.typeValidationForm.status == "INVALID") return;
     var formData: any = new FormData();
-    formData.append("user_id", this.typeValidationForm.value.name);
+    // console.log(this.riderId);
+    formData.append("user_id", this.riderId);
+    // formData.append("user_id", this.typeValidationForm.value.user_id);
     formData.append("car_id", this.typeValidationForm.value.plate);
     formData.append("km", this.typeValidationForm.value.km);
-    formData.append(
-      "event_date_time",
-      this.typeValidationForm.value.event_date_time
-    );
+    formData.append("event_date_time",this.typeValidationForm.value.event_date_time);
     let data = this.typeValidationForm.value;
     if (data.id == 0 || data.id == null) {
       this.authFackservice

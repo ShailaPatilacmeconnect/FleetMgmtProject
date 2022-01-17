@@ -1,16 +1,37 @@
 <div class="container-fluid">
+
     <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-flex align-items-center justify-content-between">
-                <h4 class="mb-0 font-size-18">Starter page</h4>
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active">Welcome to Starter page</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
+    <app-page-title title="Apex charts" [breadcrumbItems]="breadCrumbItems"></app-page-title>
     <!-- end page title -->
-</div> <!-- container-fluid -->
+  
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title mb-4">Line with Data Labels</h4>
+            <apx-chart class="apex-charts" dir="ltr" [series]="linewithDataChart.series" [chart]="linewithDataChart.chart"
+              [colors]="linewithDataChart.colors" [stroke]="linewithDataChart.stroke"
+              [dataLabels]="linewithDataChart.dataLabels" [title]="linewithDataChart.title"
+              [responsive]="linewithDataChart.responsive" [legend]="linewithDataChart.legend"
+              [xaxis]="linewithDataChart.xaxis" [yaxis]="linewithDataChart.yaxis" [stroke]="linewithDataChart.stroke"
+              [markers]="linewithDataChart.markers">
+            </apx-chart>
+          </div>
+        </div>
+        <!--end card-->
+      </div>
+            <div class="col-lg-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mb-4">Dummy Chart</h4>
+                  <apx-chart class="apex-charts" dir="ltr" [series]="dummyDataChart.series" [chart]="dummyDataChart.chart" 
+                  [colors]="dummyDataChart.colors"
+                  ></apx-chart>
+                  </div>
+                  </div>
+                  </div>        
+          
+  
+  </div>
+  </div> <!-- container-fluid -->
+  

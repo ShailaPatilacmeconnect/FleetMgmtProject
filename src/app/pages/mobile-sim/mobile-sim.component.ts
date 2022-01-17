@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren  } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.service';
 import { notificationService } from 'src/app/core/services/notofication.service';
@@ -31,6 +31,7 @@ export class MobileSimComponent implements OnInit {
   mobileSimData: any = [];
   sortBy = "";
   order = "";
+  riderId="";
   keyword: string = "";
   title = "Add";
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader> =
@@ -48,21 +49,21 @@ export class MobileSimComponent implements OnInit {
       { label: "My Dashboard", href: "/dashboard" },
       { label: "Mobile SIM", active: true },
     ];
+    
     this._fetchData();
   }
 
   initForm() {
     this.typeValidationForm = this.formBuilder.group({
       id: 0,
-      serial_number: [
-        "",
+      serial_number: ["",
         [
           Validators.required,
           Validators.maxLength(16),
           Validators.minLength(16),
         ],
       ],
-      number: ["", [Validators.required]],
+      number: ["", [Validators.required, Validators.pattern('^(\\+?\d{1,4}[\s-])?(?!0+\s+,?$)\\d{9}\s*,?$')]],
     });
   }
   conditionalrequiredValidator(client) {
