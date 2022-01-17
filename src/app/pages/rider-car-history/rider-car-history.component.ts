@@ -30,7 +30,7 @@ export class RiderCarHistoryComponent implements OnInit {
   page = { totalElements: 0, pageNumber: 1, size: 10 };
 
   breadCrumbItems: Array<{}>;
-  typeValidationForm: FormGroup; // type validation form
+  typeValidationForm: FormGroup;
   typesubmit: boolean = false;
 
   carRideHistoryData: any = [];
@@ -40,7 +40,7 @@ export class RiderCarHistoryComponent implements OnInit {
   order = "";
   riderId="";
   keyword: string = "";
-  // title='Add';
+  
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader> =
     Object.create(null);
   constructor(

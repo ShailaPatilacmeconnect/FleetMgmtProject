@@ -30,7 +30,7 @@ export class RiderBikeHistoryComponent implements OnInit {
   page = { totalElements: 0, pageNumber: 1, size: 10 };
 
   breadCrumbItems: Array<{}>;
-  typeValidationForm: FormGroup; // type validation form
+  typeValidationForm: FormGroup; 
   typesubmit: boolean = false;
 
   rideHistoryData: any = [];
